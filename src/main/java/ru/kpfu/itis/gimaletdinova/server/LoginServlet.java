@@ -59,13 +59,13 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("/home");
             }
             else {
-                session.setAttribute("error",true);
-                resp.sendRedirect("/login");
+                req.setAttribute("error",true);
+                req.getRequestDispatcher("login.ftl").forward(req, resp);
             }
         }
         else {
-            session.setAttribute("error",true);
-            resp.sendRedirect("/login");
+            req.setAttribute("error",true);
+            req.getRequestDispatcher("login.ftl").forward(req, resp);
         }
     }
 }

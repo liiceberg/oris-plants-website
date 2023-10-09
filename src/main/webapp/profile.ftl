@@ -3,12 +3,12 @@
 
 <#macro title>Profile</#macro>
 
-
-
 <#macro content>
-    Name: <br>
-    Surname: <br>
-    <input type="submit" value="log out">
+    <img src=""/><br>
+    Name: ${user.name}<br>
+    Surname: ${user.lastname}<br>
+    <a href="/edit">edit</a><br>
+    <a href="/logout">log out</a><br>
 </#macro>
 
 </html>

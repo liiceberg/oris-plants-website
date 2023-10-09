@@ -1,10 +1,14 @@
 package ru.kpfu.itis.gimaletdinova;
 
+import ru.kpfu.itis.gimaletdinova.service.UserService;
+import ru.kpfu.itis.gimaletdinova.service.UserServiceImplementation;
+
 import java.sql.*;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        String s = "1234wer1234";
-        System.out.println(s.matches("\\d*"));
+        UserService userService = new UserServiceImplementation();
+        System.out.println(userService.get(8));
+
     }
 }

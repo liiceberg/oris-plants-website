@@ -9,6 +9,11 @@ public class UserDto {
         this.lastname = lastname;
     }
 
+    @Override
+    public String toString() {
+        return name + " " + lastname;
+    }
+
     public String getName() {
         return name;
     }

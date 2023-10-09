@@ -4,7 +4,7 @@
 <#macro title>Log in</#macro>
 
 <#macro content>
-    <a href="signup.ftl">sign up</a>
+    <a href="/signup">sign up</a>
     <br>
     <form action="login" method="post">
         Login: <input type="text" name="login"/><br>

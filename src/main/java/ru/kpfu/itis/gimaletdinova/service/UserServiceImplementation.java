@@ -33,4 +33,5 @@ public class UserServiceImplementation implements UserService {
         user.setPassword(PasswordUtil.encrypt(user.getPassword()));
         dao.save(user);
     }
+
 }

@@ -8,5 +8,5 @@ public class Comment {
     private LocalDateTime dateTime;
     private String text;
     private Post post;
-//    private User user;
+    private User feedbackUser;
 }

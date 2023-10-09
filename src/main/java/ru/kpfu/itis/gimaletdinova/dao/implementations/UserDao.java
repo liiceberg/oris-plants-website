@@ -23,6 +23,19 @@ public class UserDao implements Dao<User> {
         return null;
     }
 
+    public void update(User user) {
+        String sql = "update users set name=?, lastname=? where id=?;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setInt(3, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public User get(String login) {
         try {
             Statement statement = connection.createStatement();

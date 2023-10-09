@@ -17,6 +17,7 @@
     <#if password_length_error??>Password must contain at least 8 characters<br></#if>
     <#if password_letters_error??>Password must contain letters<br></#if>
     <#if password_dig_error??>Password must contain digits<br></#if>
+    <#if empty_field_error??>Fields must be not empty<br></#if>
 </#macro>
 
 </html>

@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name="signupServlet", urlPatterns = "/signup")
@@ -23,8 +22,6 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        clearAttributes(session);
 
         String name = req.getParameter("name");
         String lastname = req.getParameter("lastname");
@@ -32,49 +29,48 @@ public class SignupServlet extends HttpServlet {
         String password = req.getParameter("password");
         String password2 = req.getParameter("password_2");
 
-
-        boolean isCorrect = true;
-
-        if (userDao.isExist(login)) {
-            session.setAttribute("login_error",true);
-            isCorrect = false;
-        }
-        if (!verifyPassword(password, session)) {
-            isCorrect = false;
-        }
-        if (!password.equals(password2)) {
-            session.setAttribute("passwords_not_equal_error", true);
-            isCorrect = false;
-        }
-        if (isCorrect) {
+        if (isFormCorrect(req, name, lastname, login, password, password2)) {
             userService.save(new User(name, lastname, login, password));
             resp.sendRedirect("/login");
         } else {
-            resp.sendRedirect("signup.ftl");
+            req.getRequestDispatcher("signup.ftl").forward(req, resp);
         }
     }
 
-    private boolean verifyPassword(String password, HttpSession session) {
-        if (password.length() < 8) {
-            session.setAttribute("password_length_error", true);
+    private boolean isFormCorrect(HttpServletRequest req, String name, String lastname,
+                                  String login, String password, String password2) {
+        if (name.isEmpty() || lastname.isEmpty() || login.isEmpty()) {
+            req.setAttribute("empty_field_error", true);
             return false;
         }
-        if (password.matches("[a-zA-Z]*")) {
-            session.setAttribute("password_dig_error", true);
+        if (userDao.isExist(login)) {
+            req.setAttribute("login_error",true);
             return false;
         }
-        if (password.matches("\\d*")) {
-            session.setAttribute("password_letters_error", true);
+        if (!verifyPassword(password, req)) {
+            return false;
+        }
+        if (!password.equals(password2)) {
+            req.setAttribute("passwords_not_equal_error", true);
             return false;
         }
         return true;
     }
 
-    private void clearAttributes(HttpSession session) {
-        session.removeAttribute("login_error");
-        session.removeAttribute("passwords_not_equal_error");
-        session.removeAttribute("password_length_error");
-        session.removeAttribute("password_letters_error");
-        session.removeAttribute("password_dig_error");
+    private boolean verifyPassword(String password, HttpServletRequest req) {
+        if (password.length() < 8) {
+            req.setAttribute("password_length_error", true);
+            return false;
+        }
+        if (password.matches("[a-zA-Z]*")) {
+            req.setAttribute("password_dig_error", true);
+            return false;
+        }
+        if (password.matches("\\d*")) {
+            req.setAttribute("password_letters_error", true);
+            return false;
+        }
+        return true;
     }
+
 }
