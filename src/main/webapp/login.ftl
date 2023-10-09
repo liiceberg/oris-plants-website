@@ -1,14 +1,18 @@
 <html lang="en">
 <#include "base.ftl">
 
-<#macro title>Login</#macro>
+<#macro title>Log in</#macro>
 
 <#macro content>
+    <a href="signup.ftl">sign up</a>
+    <br>
     <form action="login" method="post">
         Login: <input type="text" name="login"/><br>
         Password: <input type="password" name="password"><br>
-        <input type="submit" value="send">
+        <input type="checkbox" name="save"/> Remember me<br/>
+        <input type="submit" value="log in"/>
     </form>
+    <#if error??>Login or password entered incorrectly</#if>
 </#macro>
 
 </html>
