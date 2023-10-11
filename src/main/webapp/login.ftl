@@ -1,5 +1,5 @@
 <html lang="en">
-<#include "base.ftl">
+<#include "basic/base.ftl">
 
 <#macro title>Log in</#macro>
 

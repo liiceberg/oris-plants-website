@@ -1,11 +1,13 @@
 <html lang="en">
-<#include "base.ftl">
+
+<#include "basic/base.ftl">
 
 <#macro title>Profile</#macro>
 
 <#macro content>
-    <form method="post">
-        <input type="image" name="img"/><br>
+    <form method="post" action="upload" enctype="multipart/form-data">
+        <img src="${user.img}"/><br>
+        Change profile picture: <input type="file" name="img"/><br>
         Name: <input type="text" name="name" value="${user.name}"/><br>
         Surname: <input type="text" name="lastname" value="${user.lastname}"/><br>
         <input type="submit" value="save"/>

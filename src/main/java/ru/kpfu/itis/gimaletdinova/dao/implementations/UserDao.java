@@ -24,12 +24,13 @@ public class UserDao implements Dao<User> {
     }
 
     public void update(User user) {
-        String sql = "update users set name=?, lastname=? where id=?;";
+        String sql = "update users set name=?, lastname=?, img=? where id=?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastname());
-            preparedStatement.setInt(3, user.getId());
+            preparedStatement.setString(3, user.getImg());
+            preparedStatement.setInt(4, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -48,7 +49,8 @@ public class UserDao implements Dao<User> {
                         resultSet.getString("name"),
                         resultSet.getString("lastname"),
                         resultSet.getString("login"),
-                        resultSet.getString("password")
+                        resultSet.getString("password"),
+                        resultSet.getString("img")
                 );
             }
         } catch (SQLException e) {
@@ -70,7 +72,8 @@ public class UserDao implements Dao<User> {
                         resultSet.getString("name"),
                         resultSet.getString("lastname"),
                         resultSet.getString("login"),
-                        resultSet.getString("password")
+                        resultSet.getString("password"),
+                        resultSet.getString("img")
                 );
             }
         } catch (SQLException e) {
@@ -94,7 +97,8 @@ public class UserDao implements Dao<User> {
                                     resultSet.getString("name"),
                                     resultSet.getString("lastname"),
                                     resultSet.getString("login"),
-                                    resultSet.getString("password")
+                                    resultSet.getString("password"),
+                                    resultSet.getString("img")
                             )
                     );
                 }

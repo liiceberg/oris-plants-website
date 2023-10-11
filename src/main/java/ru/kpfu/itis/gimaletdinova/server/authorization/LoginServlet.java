@@ -1,5 +1,6 @@
-package ru.kpfu.itis.gimaletdinova.server;
+package ru.kpfu.itis.gimaletdinova.server.authorization;
 
+import ru.kpfu.itis.gimaletdinova.Const;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         HttpSession session = req.getSession();
-        session.setMaxInactiveInterval(-1);
+        session.setMaxInactiveInterval(Const.maxAge);
 
         if (userDao.isExist(login)) {
             User user = userDao.get(login);
@@ -53,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 
                 if (save != null) {
                     Cookie cookie = new Cookie("saved_user_id", Integer.toString(user.getId()));
-                    cookie.setMaxAge(-1);
+                    cookie.setMaxAge(Const.maxAge);
                     resp.addCookie(cookie);
                 }
                 resp.sendRedirect("/home");

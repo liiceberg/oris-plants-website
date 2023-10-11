@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gimaletdinova.server;
+package ru.kpfu.itis.gimaletdinova.server.authorization;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

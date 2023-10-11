@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gimaletdinova.server;
+package ru.kpfu.itis.gimaletdinova.server.menu;
 
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.dto.UserDto;
@@ -22,7 +22,7 @@ public class ProfileServlet extends HttpServlet {
         int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
         UserDto userDto = userService.get(userId);
         req.setAttribute("user", userDto);
-        req.getRequestDispatcher("profile.ftl").forward(req, resp);
+        req.getRequestDispatcher("menu/profile.ftl").forward(req, resp);
     }
 
 }

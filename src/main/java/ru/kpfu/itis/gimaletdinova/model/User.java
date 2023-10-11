@@ -1,6 +1,5 @@
 package ru.kpfu.itis.gimaletdinova.model;
 
-import java.io.File;
 
 public class User {
     private int id;
@@ -13,14 +12,15 @@ public class User {
 
     private String password;
 
-    private File img;
+    private String img;
 
-    public User(int id, String name, String lastname, String login, String password) {
+    public User(int id, String name, String lastname, String login, String password, String img) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.login = login;
         this.password = password;
+        this.img = img;
     }
 
     public User(String name, String lastname, String login, String password) {
@@ -81,10 +81,10 @@ public class User {
         this.password = password;
     }
 
-    public File getImg() {
+    public String getImg() {
         return img;
     }
-    public void setImg(File img) {
+    public void setImg(String img) {
         this.img = img;
     }
 }

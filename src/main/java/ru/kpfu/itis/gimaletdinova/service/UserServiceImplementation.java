@@ -18,14 +18,14 @@ public class UserServiceImplementation implements UserService {
         return dao
                 .getAll()
                 .stream()
-                .map(u -> new UserDto(u.getName(), u.getLastname()))
+                .map(u -> new UserDto(u.getName(), u.getLastname(), u.getImg()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDto get(int id) {
         User u = dao.get(id);
-        return new UserDto(u.getName(), u.getLastname());
+        return new UserDto(u.getName(), u.getLastname(), u.getImg());
     }
 
     @Override

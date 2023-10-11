@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gimaletdinova.server;
+package ru.kpfu.itis.gimaletdinova.server.authorization;
 
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.model.User;
