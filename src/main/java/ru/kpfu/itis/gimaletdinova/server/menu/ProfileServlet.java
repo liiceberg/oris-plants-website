@@ -1,8 +1,6 @@
 package ru.kpfu.itis.gimaletdinova.server.menu;
 
-import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.dto.UserDto;
-import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.service.UserService;
 import ru.kpfu.itis.gimaletdinova.service.UserServiceImplementation;
 
