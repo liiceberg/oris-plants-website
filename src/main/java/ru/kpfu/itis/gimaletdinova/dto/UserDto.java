@@ -4,11 +4,13 @@ public class UserDto {
     private String name;
     private String lastname;
     private String img;
+    private String login;
 
-    public UserDto(String name, String lastname, String img) {
+    public UserDto(String name, String lastname, String img, String login) {
         this.name = name;
         this.lastname = lastname;
         this.img = img;
+        this.login = login;
     }
 
     @Override
@@ -27,4 +29,6 @@ public class UserDto {
     public String getImg() {
         return img;
     }
+
+    public String getLogin() {return login;}
 }

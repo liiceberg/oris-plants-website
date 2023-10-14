@@ -5,6 +5,7 @@
 
 <#macro content>
     <img src="${user.img}"/><br>
+    Login: ${user.login}<br>
     Name: ${user.name}<br>
     Surname: ${user.lastname}<br>
     <a href="/edit">edit</a><br>

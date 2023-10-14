@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao implements Dao<User> {
-    private final Connection connection = DatabaseConnectionUtil.getConnection();
+    private final Connection connection;
+
+    public UserDao(Connection connection) {
+        this.connection = connection;
+    }
 
     public Boolean isExist(String login) {
         try {
@@ -24,13 +28,14 @@ public class UserDao implements Dao<User> {
     }
 
     public void update(User user) {
-        String sql = "update users set name=?, lastname=?, img=? where id=?;";
+        String sql = "update users set name=?, lastname=?, img=?, password=? where id=?;";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastname());
             preparedStatement.setString(3, user.getImg());
-            preparedStatement.setInt(4, user.getId());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setInt(5, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

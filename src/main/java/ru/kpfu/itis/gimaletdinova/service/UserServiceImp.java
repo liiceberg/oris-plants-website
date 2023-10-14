@@ -10,22 +10,26 @@ import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
 
-public class UserServiceImplementation implements UserService {
-    private final Dao<User> dao = new UserDao();
+public class UserServiceImp implements UserService {
+    private final Dao<User> dao;
+
+    public UserServiceImp(Dao<User> dao) {
+        this.dao = dao;
+    }
 
     @Override
     public List<UserDto> getAll() {
         return dao
                 .getAll()
                 .stream()
-                .map(u -> new UserDto(u.getName(), u.getLastname(), u.getImg()))
+                .map(u -> new UserDto(u.getName(), u.getLastname(), u.getImg(), u.getLogin()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDto get(int id) {
         User u = dao.get(id);
-        return new UserDto(u.getName(), u.getLastname(), u.getImg());
+        return new UserDto(u.getName(), u.getLastname(), u.getImg(), u.getLogin());
     }
 
     @Override

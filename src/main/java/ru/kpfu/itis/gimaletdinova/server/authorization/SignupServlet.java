@@ -1,20 +1,24 @@
 package ru.kpfu.itis.gimaletdinova.server.authorization;
 
+import ru.kpfu.itis.gimaletdinova.KeyNames;
+import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.model.User;
-import ru.kpfu.itis.gimaletdinova.service.UserServiceImplementation;
+import ru.kpfu.itis.gimaletdinova.service.UserService;
+import ru.kpfu.itis.gimaletdinova.service.UserServiceImp;
+import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name="signupServlet", urlPatterns = "/signup")
 public class SignupServlet extends HttpServlet {
 
-    private final UserDao userDao = new UserDao();
-    private final UserServiceImplementation userService = new UserServiceImplementation();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendRedirect("signup.ftl");
@@ -30,6 +34,7 @@ public class SignupServlet extends HttpServlet {
         String password2 = req.getParameter("password_2");
 
         if (isFormCorrect(req, name, lastname, login, password, password2)) {
+            UserService userService = (UserServiceImp) getServletContext().getAttribute(KeyNames.USER_SERVICE);
             userService.save(new User(name, lastname, login, password));
             resp.sendRedirect("/login");
         } else {
@@ -43,31 +48,20 @@ public class SignupServlet extends HttpServlet {
             req.setAttribute("empty_field_error", true);
             return false;
         }
+        UserDao userDao = (UserDao) getServletContext().getAttribute(KeyNames.USER_DAO);
         if (userDao.isExist(login)) {
             req.setAttribute("login_error",true);
             return false;
         }
-        if (!verifyPassword(password, req)) {
-            return false;
+        Map<String, Boolean> map = PasswordUtil.verify(password);
+        for (String error: map.keySet()) {
+            if (map.get(error)) {
+                req.setAttribute(error, true);
+                return false;
+            }
         }
-        if (!password.equals(password2)) {
+        if (!PasswordUtil.verifyEquals(password, password2)) {
             req.setAttribute("passwords_not_equal_error", true);
-            return false;
-        }
-        return true;
-    }
-
-    private boolean verifyPassword(String password, HttpServletRequest req) {
-        if (password.length() < 8) {
-            req.setAttribute("password_length_error", true);
-            return false;
-        }
-        if (password.matches("[a-zA-Z]*")) {
-            req.setAttribute("password_dig_error", true);
-            return false;
-        }
-        if (password.matches("\\d*")) {
-            req.setAttribute("password_letters_error", true);
             return false;
         }
         return true;

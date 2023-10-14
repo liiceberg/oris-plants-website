@@ -3,11 +3,11 @@
     <meta charset="UTF-8">
     <title><@title></@title></title>
     <div class="header">
-        <a href="/profile">Profile</a>
-        <a href="/help">Help</a>
         <a href="/home">Home</a>
+        <a href="/help">Help</a>
         <a href="/menu/favourites.ftl">Favourites</a>
         <a href="/menu/my_posts.ftl">My Posts</a>
+        <a href="/profile">Profile</a>
     </div>
     <script></script>
 </head>

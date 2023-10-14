@@ -1,6 +1,7 @@
 package ru.kpfu.itis.gimaletdinova.server.authorization;
 
 import ru.kpfu.itis.gimaletdinova.Const;
+import ru.kpfu.itis.gimaletdinova.KeyNames;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
@@ -14,7 +15,6 @@ import java.util.Optional;
 
 @WebServlet(name = "loginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
-    private final UserDao userDao = new UserDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -43,6 +43,8 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(Const.maxAge);
+
+        UserDao userDao = (UserDao) getServletContext().getAttribute(KeyNames.USER_DAO);
 
         if (userDao.isExist(login)) {
             User user = userDao.get(login);

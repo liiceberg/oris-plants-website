@@ -5,15 +5,16 @@ import ru.kpfu.itis.gimaletdinova.model.Post;
 import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.util.DatabaseConnectionUtil;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostDao implements Dao<Post> {
-    private final Connection connection = DatabaseConnectionUtil.getConnection();
-    private final Dao<User> userDao = new UserDao();
+    private final Connection connection;
+
+    public PostDao(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public Post get(int id) {
@@ -27,7 +28,8 @@ public class PostDao implements Dao<Post> {
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
                         resultSet.getString("description"),
-                        userDao.get(resultSet.getInt("author_id")),
+                        resultSet.getString("img"),
+                        resultSet.getInt("author_id"),
                         resultSet.getTimestamp("datetime").toLocalDateTime()
                 );
             }
@@ -39,16 +41,50 @@ public class PostDao implements Dao<Post> {
 
     @Override
     public List<Post> getAll() {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * from posts";
+            ResultSet resultSet = statement.executeQuery(sql);
+            List<Post> posts = new ArrayList<>();
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    posts.add(
+                            new Post(
+                                    resultSet.getInt("id"),
+                                    resultSet.getString("title"),
+                                    resultSet.getString("description"),
+                                    resultSet.getString("img"),
+                                    resultSet.getInt("author_id"),
+                                    resultSet.getTimestamp("datetime").toLocalDateTime()
+                            )
+                    );
+                }
+            }
+            return posts;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
     @Override
     public void save(Post post) {
+        String sql = "insert into posts (title, description, author_id, img) values (?, ?, ?, ?);";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, post.getTitle());
+            preparedStatement.setString(2, post.getText());
+            preparedStatement.setInt(3, post.getAuthorId());
+            preparedStatement.setString(4, post.getImg());
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
     public void update(Post post) {
-
+//        TODO
     }
 }
