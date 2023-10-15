@@ -1,13 +1,19 @@
 package ru.kpfu.itis.gimaletdinova.model;
 
-import java.io.File;
+import ru.kpfu.itis.gimaletdinova.model.plant_enam.Category;
+import ru.kpfu.itis.gimaletdinova.model.plant_enam.Level;
 
 public class Plant {
     private int id;
-    private String category;
+    private Category category;
     private String name;
-    private String high;
+    private String img;
+    private String origin;
     private String description;
-    private File img;
+    private int high;
+    private Level light;
+    private Level watering;
+    private Boolean toxicity;
+    private Level careDifficulty;
 
 }

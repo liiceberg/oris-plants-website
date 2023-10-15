@@ -1,8 +1,6 @@
 package ru.kpfu.itis.gimaletdinova;
 
 import com.cloudinary.Cloudinary;
-import ru.kpfu.itis.gimaletdinova.service.UserService;
-import ru.kpfu.itis.gimaletdinova.service.UserServiceImplementation;
 import ru.kpfu.itis.gimaletdinova.util.CloudinaryUtil;
 
 import java.io.File;

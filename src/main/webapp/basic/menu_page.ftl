@@ -13,9 +13,6 @@
 </head>
 
 <body>
-<div id="header">
-    <h3>App</h3>
-</div>
 
 <div class="content">
     <div class="content"><@content></@content></div>

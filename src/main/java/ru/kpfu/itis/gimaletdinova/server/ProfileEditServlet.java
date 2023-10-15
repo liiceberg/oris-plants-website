@@ -5,7 +5,7 @@ import ru.kpfu.itis.gimaletdinova.KeyNames;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.dto.UserDto;
 import ru.kpfu.itis.gimaletdinova.model.User;
-import ru.kpfu.itis.gimaletdinova.service.UserServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.UserService;
 import ru.kpfu.itis.gimaletdinova.util.FileDownloadUtil;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
@@ -96,7 +96,7 @@ public class ProfileEditServlet extends HttpServlet {
 
     private void getUser(HttpServletRequest req) {
         int userId = getUserId(req);
-        UserServiceImp userService = (UserServiceImp) getServletContext().getAttribute(KeyNames.USER_SERVICE);
+        UserService userService = (UserService) getServletContext().getAttribute(KeyNames.USER_SERVICE);
         UserDto userDto = userService.get(userId);
         req.setAttribute("user", userDto);
     }

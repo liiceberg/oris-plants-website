@@ -4,7 +4,7 @@
 <#macro title>My posts</#macro>
 
 <#macro content>
-    <a href="../create_post.ftl">Add new post</a>
+    <a href="/add">Add new post</a>
 
 
 

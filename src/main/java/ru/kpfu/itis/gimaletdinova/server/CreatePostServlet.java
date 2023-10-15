@@ -1,9 +1,10 @@
-package ru.kpfu.itis.gimaletdinova.server.menu;
+package ru.kpfu.itis.gimaletdinova.server;
 
 import ru.kpfu.itis.gimaletdinova.Const;
 import ru.kpfu.itis.gimaletdinova.KeyNames;
 import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.model.Post;
+import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
 import ru.kpfu.itis.gimaletdinova.util.FileDownloadUtil;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
-@WebServlet(name = "createPostServlet", urlPatterns = "/posts/add")
+@WebServlet(name = "createPostServlet", urlPatterns = "/add")
 @MultipartConfig(
         maxFileSize = Const.maxFileSize,
         maxRequestSize = Const.maxRequestSize
@@ -38,10 +39,10 @@ public class CreatePostServlet extends HttpServlet {
             req.setAttribute("empty_title_error", true);
             req.getRequestDispatcher("create_post.ftl").forward(req, resp);
         } else {
-            Dao<Post> postDao = (Dao<Post>) getServletContext().getAttribute(KeyNames.POST_DAO);
-            postDao.save(new Post(title, text, img,
+            PostServiceImp postService = (PostServiceImp) getServletContext().getAttribute(KeyNames.POST_SERVICE);
+            postService.save(new Post(title, text, img,
                     Integer.parseInt(req.getSession().getAttribute("user_id").toString())));
-            resp.sendRedirect("my_posts.ftl");
+            resp.sendRedirect("menu/my_posts.ftl");
         }
     }
 }

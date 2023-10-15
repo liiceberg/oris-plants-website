@@ -1,11 +1,9 @@
 package ru.kpfu.itis.gimaletdinova.server.authorization;
 
 import ru.kpfu.itis.gimaletdinova.KeyNames;
-import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.service.UserService;
-import ru.kpfu.itis.gimaletdinova.service.UserServiceImp;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
 import javax.servlet.ServletException;
@@ -34,7 +32,7 @@ public class SignupServlet extends HttpServlet {
         String password2 = req.getParameter("password_2");
 
         if (isFormCorrect(req, name, lastname, login, password, password2)) {
-            UserService userService = (UserServiceImp) getServletContext().getAttribute(KeyNames.USER_SERVICE);
+            UserService userService = (UserService) getServletContext().getAttribute(KeyNames.USER_SERVICE);
             userService.save(new User(name, lastname, login, password));
             resp.sendRedirect("/login");
         } else {
