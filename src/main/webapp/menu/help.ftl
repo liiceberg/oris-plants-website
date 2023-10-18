@@ -5,12 +5,23 @@
 
 <#macro content>
     <#list posts as post>
-        ${post.title}<br>
-        <#if post.img??><img src="${post.img}"/><br></#if>
-        <#if post.text??>${post.text}<br></#if>
-        ${post.dateTime}<br>
-        ${post.author}<br>
-        <br>
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <span class="avatar text-bg-primary avatar-lg fs-5">R</span>
+                <div class="ms-3">
+                    <h6 class="mb-0 fs-sm">${post.author}</h6>
+                    <span class="text-muted fs-sm">${post.dateTime}</span>
+                </div>
+            </div>
+            <#if post.img??><img class="card-img-top" src="${post.img}"/></#if>
+            <div class="card-body">
+                <p class="card-text">${post.title}</p>
+            </div>
+            <div class="card-footer d-flex">
+                <a class="btn btn-link p-0 me-auto fw-bold" href="/post/${post.id}">Read more</a>
+                <button class="btn btn-subtle" type="button"><i class="fas fa-heart fa-lg"></i></button>
+            </div>
+        </div>
     <#else>
         Published posts will be here
     </#list>
