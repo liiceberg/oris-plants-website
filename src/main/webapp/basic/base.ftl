@@ -13,7 +13,7 @@
     <hr class="border border-primary border-2 opacity-50">
 </div>
 
-<div>
+<div class="content container">
     <@content></@content>
 </div>
 
