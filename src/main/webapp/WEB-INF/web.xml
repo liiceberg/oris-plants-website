@@ -24,5 +24,9 @@
         <servlet-name>freemarker</servlet-name>
         <url-pattern>*.ftl</url-pattern>
     </servlet-mapping>
+
+    <error-page>
+        <location>/handle</location>
+    </error-page>
     
     </web-app>    

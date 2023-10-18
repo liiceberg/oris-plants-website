@@ -3,8 +3,10 @@
 
 <#macro title>Exception</#macro>
 
+<#macro script></#macro>
+
 <#macro content>
-    <h1>Details:</h1>
+    <h3 class="text-center">Details</h3>
     <strong>Status code:</strong>${status_code}<br>
     <strong>Request URI:</strong>${uri}
     <#if message??><strong>Message:</strong>${message}</#if>
