@@ -3,6 +3,8 @@
 
 <#macro title>New post</#macro>
 
+<#macro script></#macro>
+
 <#macro content>
     <form method="post" action="/add" enctype="multipart/form-data">
         Add picture: <input type="file" name="img"/><br>

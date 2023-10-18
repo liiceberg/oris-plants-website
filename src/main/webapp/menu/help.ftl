@@ -13,15 +13,16 @@
                     <span class="text-muted fs-sm">${post.dateTime}</span>
                 </div>
             </div>
-            <#if post.img??><img class="card-img-top" src="${post.img}"/></#if>
             <div class="card-body">
                 <p class="card-text">${post.title}</p>
             </div>
+            <#if post.img??><img class="card-img-top" src="${post.img}"/></#if>
             <div class="card-footer d-flex">
                 <a class="btn btn-link p-0 me-auto fw-bold" href="/post/${post.id}">Read more</a>
                 <button class="btn btn-subtle" type="button"><i class="fas fa-heart fa-lg"></i></button>
             </div>
         </div>
+        <br>
     <#else>
         Published posts will be here
     </#list>
