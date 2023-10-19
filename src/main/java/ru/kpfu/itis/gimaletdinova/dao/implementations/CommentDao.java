@@ -107,4 +107,30 @@ public class CommentDao implements Dao<Comment> {
         }
         return null;
     }
+
+    @Override
+    public void update(Comment comment) {
+        String sql = "update comments set comment_text=? where id=?;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, comment.getText());
+            preparedStatement.setInt(2, comment.getId());
+
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(Comment comment) {
+        String sql = "delete from comments where id=" + comment.getId();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

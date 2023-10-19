@@ -2,7 +2,6 @@ package ru.kpfu.itis.gimaletdinova.dao.implementations;
 
 import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.model.User;
-import ru.kpfu.itis.gimaletdinova.util.DatabaseConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ public class UserDao implements Dao<User> {
         return null;
     }
 
+    @Override
     public void update(User user) {
         String sql = "update users set name=?, lastname=?, img=?, password=? where id=?;";
         try {
@@ -126,6 +126,17 @@ public class UserDao implements Dao<User> {
             preparedStatement.setString(4, user.getPassword());
 
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(User user) {
+        String sql = "delete from users where id=" + user.getId();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

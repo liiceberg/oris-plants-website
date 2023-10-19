@@ -43,7 +43,7 @@ public class PostDao implements Dao<Post> {
     public List<Post> getAll() {
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT * from posts";
+            String sql = "SELECT * from posts order by datetime desc";
             ResultSet resultSet = statement.executeQuery(sql);
             List<Post> posts = new ArrayList<>();
             if (resultSet != null) {
@@ -83,8 +83,57 @@ public class PostDao implements Dao<Post> {
         }
     }
 
+    public List<Post> getAll(int userId) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * from posts where author_id=" + userId + " order by datetime desc";
+            ResultSet resultSet = statement.executeQuery(sql);
+            List<Post> posts = new ArrayList<>();
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    posts.add(
+                            new Post(
+                                    resultSet.getInt("id"),
+                                    resultSet.getString("title"),
+                                    resultSet.getString("description"),
+                                    resultSet.getString("img"),
+                                    resultSet.getInt("author_id"),
+                                    resultSet.getTimestamp("datetime").toLocalDateTime()
+                            )
+                    );
+                }
+            }
+            return posts;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public void update(Post post) {
-//        TODO
+        String sql = "update posts set title=?, description=?, img=? where id=?;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, post.getTitle());
+            preparedStatement.setString(2, post.getText());
+            preparedStatement.setString(3, post.getImg());
+            preparedStatement.setInt(4, post.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(Post post) {
+        String sql = "delete from posts where id=" + post.getId();
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
