@@ -1,11 +1,11 @@
 <html lang="en">
-<#include "basic/base.ftl">
+<#include "basic/base_with_header.ftl">
 
 <#macro title>Sign up</#macro>
 <#macro script></#macro>
 
 <#macro content>
-    <form action="signup" method="post">
+    <form action="signup" method="post" style="width: 500px; margin: 0 auto">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="name"/>

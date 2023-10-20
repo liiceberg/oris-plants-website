@@ -7,6 +7,7 @@ import ru.kpfu.itis.gimaletdinova.model.Post;
 import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
 import ru.kpfu.itis.gimaletdinova.util.FileDownloadUtil;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -23,9 +24,17 @@ import java.io.IOException;
 )
 public class CreatePostServlet extends HttpServlet {
 
+    private PostServiceImp postService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        postService = (PostServiceImp) getServletContext().getAttribute(KeyNames.POST_SERVICE);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("create_post.ftl");
+        resp.sendRedirect(req.getContextPath() + "create_post.ftl");
     }
 
     @Override
@@ -39,10 +48,9 @@ public class CreatePostServlet extends HttpServlet {
             req.setAttribute("empty_title_error", true);
             req.getRequestDispatcher("create_post.ftl").forward(req, resp);
         } else {
-            PostServiceImp postService = (PostServiceImp) getServletContext().getAttribute(KeyNames.POST_SERVICE);
             postService.save(new Post(title, text, img,
                     Integer.parseInt(req.getSession().getAttribute("user_id").toString())));
-            resp.sendRedirect("menu/my_posts.ftl");
+            resp.sendRedirect(req.getContextPath() + "/myposts");
         }
     }
 }

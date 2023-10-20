@@ -1,8 +1,7 @@
 package ru.kpfu.itis.gimaletdinova.server.menu;
 
 import ru.kpfu.itis.gimaletdinova.KeyNames;
-import ru.kpfu.itis.gimaletdinova.dto.UserDto;
-import ru.kpfu.itis.gimaletdinova.service.UserService;
+import ru.kpfu.itis.gimaletdinova.dao.implementations.PlantDao;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,23 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "profileServlet", urlPatterns = "/profile")
-public class ProfileServlet extends HttpServlet {
-
-    private UserService userService;
+@WebServlet(name="mainPageServlet", urlPatterns = "/main")
+public class MainPageServlet extends HttpServlet {
+    private PlantDao plantDao;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        userService = (UserService) getServletContext().getAttribute(KeyNames.USER_SERVICE);
+        plantDao = (PlantDao) getServletContext().getAttribute(KeyNames.PLANT_DAO);
+    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("plants", plantDao.getAll());
+        req.getRequestDispatcher("/menu/main.ftl").forward(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
-        UserDto userDto = userService.get(userId);
-        req.setAttribute("user", userDto);
-        req.getRequestDispatcher("menu/profile.ftl").forward(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect(req.getContextPath() + "/menu/main.ftl");
     }
-
 }

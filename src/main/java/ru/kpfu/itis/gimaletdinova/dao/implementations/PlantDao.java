@@ -27,7 +27,7 @@ public class PlantDao implements Dao<Plant> {
                 resultSet.next();
                 return new Plant(
                         resultSet.getInt("id"),
-                        Category.valueOf(resultSet.getString("category")),
+                        Category.get(resultSet.getString("category")),
                         resultSet.getString("name"),
                         resultSet.getString("img"),
                         resultSet.getString("origin"),
@@ -58,7 +58,7 @@ public class PlantDao implements Dao<Plant> {
                     plants.add(
                             new Plant(
                                     resultSet.getInt("id"),
-                                    Category.valueOf(resultSet.getString("category")),
+                                    Category.get(resultSet.getString("category")),
                                     resultSet.getString("name"),
                                     resultSet.getString("img"),
                                     resultSet.getString("origin"),
@@ -136,5 +136,39 @@ public class PlantDao implements Dao<Plant> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<Plant> getAll(int userId) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * from favourites inner join plants on favourites.card_id=plants.id where user_id="
+                    + userId;
+            ResultSet resultSet = statement.executeQuery(sql);
+            List<Plant> plants = new ArrayList<>();
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    plants.add(
+                            new Plant(
+                                    resultSet.getInt("id"),
+                                    Category.get(resultSet.getString("category")),
+                                    resultSet.getString("name"),
+                                    resultSet.getString("img"),
+                                    resultSet.getString("origin"),
+                                    resultSet.getString("description"),
+                                    resultSet.getInt("high"),
+                                    Level.valueOf(resultSet.getInt("light")),
+                                    Level.valueOf(resultSet.getInt("watering")),
+                                    resultSet.getBoolean("toxicity"),
+                                    Level.valueOf(resultSet.getInt("care_difficulty"))
+
+                            )
+                    );
+                }
+            }
+            return plants;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

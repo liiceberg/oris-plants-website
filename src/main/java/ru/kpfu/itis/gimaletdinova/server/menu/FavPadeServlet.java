@@ -1,7 +1,7 @@
 package ru.kpfu.itis.gimaletdinova.server.menu;
 
 import ru.kpfu.itis.gimaletdinova.KeyNames;
-import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
+import ru.kpfu.itis.gimaletdinova.dao.implementations.PlantDao;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,24 +11,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "helpServlet", urlPatterns = "/help")
-public class HelpServlet extends HttpServlet {
+@WebServlet(name="favPageServlet", urlPatterns = "/favourites")
+public class FavPadeServlet extends HttpServlet {
 
-    private PostServiceImp postService;
+    private PlantDao plantDao;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        postService = (PostServiceImp) getServletContext().getAttribute(KeyNames.POST_SERVICE);
+        plantDao = (PlantDao) getServletContext().getAttribute(KeyNames.PLANT_DAO);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", postService.getAll());
-        req.getRequestDispatcher("/menu/help.ftl").forward(req, resp);
+        int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
+        req.setAttribute("plants", plantDao.getAll(userId));
+        req.getRequestDispatcher("/menu/favourites.ftl").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath() + "/menu/help.ftl");
+        int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
+        req.setAttribute("plants", plantDao.getAll(userId));
+        req.getRequestDispatcher("/menu/favourites.ftl").forward(req, resp);
     }
 }

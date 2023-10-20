@@ -17,7 +17,7 @@ public class UserDao implements Dao<User> {
     public Boolean isExist(String login) {
         try {
             Statement statement = connection.createStatement();
-            String sql = "select * from users where login='" + login + "'";
+            String sql = "select id from users where login='" + login + "'";
             ResultSet resultSet = statement.executeQuery(sql);
             return resultSet.next();
         } catch (SQLException e) {

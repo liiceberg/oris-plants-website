@@ -9,6 +9,7 @@ import ru.kpfu.itis.gimaletdinova.service.UserService;
 import ru.kpfu.itis.gimaletdinova.util.FileDownloadUtil;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,16 @@ import java.util.Map;
         maxRequestSize = Const.maxRequestSize
 )
 public class ProfileEditServlet extends HttpServlet {
+
+    private UserDao userDao;
+    private UserService userService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        userDao = (UserDao) getServletContext().getAttribute(KeyNames.USER_DAO);
+        userService = (UserService) getServletContext().getAttribute(KeyNames.USER_SERVICE);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,9 +54,7 @@ public class ProfileEditServlet extends HttpServlet {
         String newPassword = req.getParameter("new_password");
         String newPassword2 = req.getParameter("new_password_2");
 
-        UserDao userDao = (UserDao) getServletContext().getAttribute(KeyNames.USER_DAO);
-
-        if (!isFormCorrect(req, userDao, name, lastname, oldPassword, newPassword, newPassword2)) {
+        if (!isFormCorrect(req, name, lastname, oldPassword, newPassword, newPassword2)) {
             req.getRequestDispatcher("profile_edit.ftl").forward(req, resp);
         } else {
             User user = userDao.get(getUserId(req));
@@ -55,16 +64,16 @@ public class ProfileEditServlet extends HttpServlet {
 //                TODO delete previous img
                 user.setImg(img);
             }
-            if (newPassword != null) {
+            if (!newPassword.isEmpty()) {
                 user.setPassword(PasswordUtil.encrypt(newPassword));
             }
             userDao.update(user);
 
-            resp.sendRedirect("/profile");
+            resp.sendRedirect(req.getContextPath() + "/profile");
         }
     }
 
-    private Boolean isFormCorrect(HttpServletRequest req, UserDao userDao, String name, String lastname,
+    private Boolean isFormCorrect(HttpServletRequest req, String name, String lastname,
                                   String oldPassword, String newPassword, String newPassword2) {
         if (name.isEmpty() || lastname.isEmpty()) {
             req.setAttribute("empty_field_error", true);
@@ -96,7 +105,6 @@ public class ProfileEditServlet extends HttpServlet {
 
     private void getUser(HttpServletRequest req) {
         int userId = getUserId(req);
-        UserService userService = (UserService) getServletContext().getAttribute(KeyNames.USER_SERVICE);
         UserDto userDto = userService.get(userId);
         req.setAttribute("user", userDto);
     }

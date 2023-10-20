@@ -20,19 +20,17 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Cookie[] cookies = req.getCookies();
         if (req.getCookies() != null) {
-            Optional<Cookie> optionalCookie  = Arrays
+            Optional<Cookie> optionalCookie = Arrays
                     .stream(cookies)
                     .filter(c -> c.getName().equals("saved_user_id"))
                     .findAny();
             if (optionalCookie.isPresent()) {
                 req.getSession().setAttribute("user_id", optionalCookie.get().getValue());
-                resp.sendRedirect("/home");
-            } else {
-                resp.sendRedirect("login.ftl");
+                resp.sendRedirect(req.getContextPath() + "/myposts");
+                return;
             }
-        } else {
-            resp.sendRedirect("login.ftl");
         }
+        resp.sendRedirect(req.getContextPath() + "/login.ftl");
     }
 
 
@@ -59,16 +57,14 @@ public class LoginServlet extends HttpServlet {
                     cookie.setMaxAge(Const.maxAge);
                     resp.addCookie(cookie);
                 }
-                resp.sendRedirect("/home");
+                resp.sendRedirect(req.getContextPath() + "/myposts");
+                return;
             }
-            else {
-                req.setAttribute("error",true);
-                req.getRequestDispatcher("login.ftl").forward(req, resp);
-            }
+
         }
-        else {
-            req.setAttribute("error",true);
-            req.getRequestDispatcher("login.ftl").forward(req, resp);
-        }
+
+        req.setAttribute("error", true);
+        req.getRequestDispatcher( "/login.ftl").forward(req, resp);
+
     }
 }

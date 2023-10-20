@@ -1,16 +1,15 @@
 package ru.kpfu.itis.gimaletdinova.dto;
 
-
-import java.time.LocalDateTime;
-
 public class PostDto {
+    private int id;
     private String title;
     private String text;
     private String img;
     private UserDto author;
-    private LocalDateTime dateTime;
+    private String dateTime;
 
-    public PostDto(String title, String text, String img, UserDto author, LocalDateTime dateTime) {
+    public PostDto(int id, String title, String text, String img, UserDto author, String dateTime) {
+        this.id = id;
         this.title = title;
         this.text = text;
         this.img = img;
@@ -18,6 +17,9 @@ public class PostDto {
         this.dateTime = dateTime;
     }
 
+    public int getId() {
+        return id;
+    }
     public String getTitle() {
         return title;
     }
@@ -34,7 +36,15 @@ public class PostDto {
         return author;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "PostDto{" +
+                "title='" + title + '\'' +
+                ", author=" + author +
+                '}';
     }
 }

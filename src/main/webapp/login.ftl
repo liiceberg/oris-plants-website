@@ -1,5 +1,5 @@
 <html lang="en">
-<#include "basic/base.ftl">
+<#include "basic/base_with_header.ftl">
 
 <#macro title>Log in</#macro>
 
@@ -11,7 +11,7 @@
         For the first time on our website? <a class="btn btn-secondary" href="/signup">Sign up</a>
         </p>
         <br>
-        <form action="login" method="post">
+        <form style="width: 500px; margin: 0 auto" action="login" method="post">
             <div class="mb-3">
                 <label for="login" class="form-label">Login</label>
                 <input type="text" class="form-control" id="login" name="login"/>

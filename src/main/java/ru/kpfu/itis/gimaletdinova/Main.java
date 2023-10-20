@@ -1,24 +1,30 @@
 package ru.kpfu.itis.gimaletdinova;
 
 import com.cloudinary.Cloudinary;
+import ru.kpfu.itis.gimaletdinova.dao.implementations.PostDao;
+import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
+import ru.kpfu.itis.gimaletdinova.dto.PostDto;
+import ru.kpfu.itis.gimaletdinova.model.Post;
+import ru.kpfu.itis.gimaletdinova.model.plant_enam.Level;
+import ru.kpfu.itis.gimaletdinova.service.PostService;
+import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.UserServiceImp;
 import ru.kpfu.itis.gimaletdinova.util.CloudinaryUtil;
+import ru.kpfu.itis.gimaletdinova.util.DatabaseConnectionUtil;
+import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException {
-        Cloudinary cloudinary = CloudinaryUtil.getInstance();
-        File file = new File("C:\\Users\\2aysy\\Downloads\\agro-c4d7b3f00e.png");
-        Map<String, Object> uploadResult = cloudinary.uploader().upload(file, new HashMap<>());
-        for (String s: uploadResult.keySet()) {
-            System.out.print(s);
-            System.out.print(": ");
-            System.out.println(uploadResult.get(s));
-        }
-
+        System.out.println();
     }
 }

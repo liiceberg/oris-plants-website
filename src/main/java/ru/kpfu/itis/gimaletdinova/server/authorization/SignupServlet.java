@@ -19,7 +19,7 @@ public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("signup.ftl");
+        resp.sendRedirect(req.getContextPath() + "/signup.ftl");
     }
 
     @Override
@@ -34,9 +34,9 @@ public class SignupServlet extends HttpServlet {
         if (isFormCorrect(req, name, lastname, login, password, password2)) {
             UserService userService = (UserService) getServletContext().getAttribute(KeyNames.USER_SERVICE);
             userService.save(new User(name, lastname, login, password));
-            resp.sendRedirect("/login");
+            resp.sendRedirect(req.getContextPath() + "/login");
         } else {
-            req.getRequestDispatcher("signup.ftl").forward(req, resp);
+            req.getRequestDispatcher("/signup.ftl").forward(req, resp);
         }
     }
 
