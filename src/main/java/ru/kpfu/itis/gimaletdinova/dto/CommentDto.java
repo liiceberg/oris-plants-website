@@ -15,6 +15,13 @@ public class CommentDto {
         this.feedbackUser = feedbackUser;
     }
 
+    public CommentDto(UserDto author, String dateTime, String text, PostDto post) {
+        this.author = author;
+        this.dateTime = dateTime;
+        this.text = text;
+        this.post = post;
+    }
+
     public UserDto getAuthor() {
         return author;
     }

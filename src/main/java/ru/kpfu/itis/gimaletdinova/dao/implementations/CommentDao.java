@@ -95,8 +95,8 @@ public class CommentDao implements Dao<Comment> {
                                     resultSet.getInt("author_id"),
                                     resultSet.getTimestamp("datetime").toLocalDateTime(),
                                     resultSet.getString("comment_text"),
-                                    resultSet.getInt("post_id"),
-                                    resultSet.getInt("feedback_user_id")
+                                    resultSet.getInt("post_id")
+//                                    resultSet.getInt("feedback_user_id")
                             )
                     );
                 }

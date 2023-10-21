@@ -18,17 +18,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Cookie[] cookies = req.getCookies();
-        if (req.getCookies() != null) {
-            Optional<Cookie> optionalCookie = Arrays
-                    .stream(cookies)
-                    .filter(c -> c.getName().equals("saved_user_id"))
-                    .findAny();
-            if (optionalCookie.isPresent()) {
-                req.getSession().setAttribute("user_id", optionalCookie.get().getValue());
-                resp.sendRedirect(req.getContextPath() + "/myposts");
-                return;
-            }
+        if (req.getSession().getAttribute("user_id") != null) {
+            resp.sendRedirect(req.getContextPath() + "/profile#logout");
+            return;
         }
         resp.sendRedirect(req.getContextPath() + "/login.ftl");
     }

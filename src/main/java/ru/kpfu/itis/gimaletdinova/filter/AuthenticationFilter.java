@@ -2,10 +2,13 @@ package ru.kpfu.itis.gimaletdinova.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @WebFilter(filterName = "authenticationFilter", urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
@@ -20,13 +23,30 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        String uri = httpServletRequest.getRequestURI();
+
         HttpSession httpSession = httpServletRequest.getSession(false);
-        if (httpSession == null && !uri.contains("login") && !uri.contains("signup")) {
-            httpServletResponse.sendRedirect("/login");
-        } else {
-            chain.doFilter(request, response);
+        if (httpSession == null) {
+            Cookie[] cookies = httpServletRequest.getCookies();
+            if (httpServletRequest.getCookies() != null) {
+                Optional<Cookie> optionalCookie = Arrays
+                        .stream(cookies)
+                        .filter(c -> c.getName().equals("saved_user_id"))
+                        .findAny();
+                if (optionalCookie.isPresent()) {
+                    httpServletRequest.getSession().setAttribute("user_id", optionalCookie.get().getValue());
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/profile");
+                    return;
+                }
+            }
         }
+        if (httpServletRequest.getSession().getAttribute("user_id") == null) {
+            String uri = httpServletRequest.getRequestURI();
+            if (uri.contains("myposts") || uri.contains("profile") || uri.contains("favourites")) {
+                httpServletResponse.sendRedirect("/login");
+                return;
+            }
+        }
+        chain.doFilter(request, response);
     }
 
     @Override

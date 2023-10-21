@@ -3,6 +3,8 @@
 
 <#macro title>Help</#macro>
 
+<#macro scripts></#macro>
+
 <#macro content>
     <#list posts as post>
         <div class="card" style="width: 680px; margin: 0 auto">

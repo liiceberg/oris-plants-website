@@ -39,6 +39,7 @@
             </div>
         </div>
     </nav>
+    <@scripts></@scripts>
 </head>
 
 <body>

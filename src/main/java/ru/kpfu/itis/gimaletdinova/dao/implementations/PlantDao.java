@@ -27,7 +27,7 @@ public class PlantDao implements Dao<Plant> {
                 resultSet.next();
                 return new Plant(
                         resultSet.getInt("id"),
-                        Category.get(resultSet.getString("category")),
+                        Category.getCategory(resultSet.getString("category")),
                         resultSet.getString("name"),
                         resultSet.getString("img"),
                         resultSet.getString("origin"),
@@ -58,7 +58,7 @@ public class PlantDao implements Dao<Plant> {
                     plants.add(
                             new Plant(
                                     resultSet.getInt("id"),
-                                    Category.get(resultSet.getString("category")),
+                                    Category.getCategory(resultSet.getString("category")),
                                     resultSet.getString("name"),
                                     resultSet.getString("img"),
                                     resultSet.getString("origin"),
@@ -150,7 +150,7 @@ public class PlantDao implements Dao<Plant> {
                     plants.add(
                             new Plant(
                                     resultSet.getInt("id"),
-                                    Category.get(resultSet.getString("category")),
+                                    Category.getCategory(resultSet.getString("category")),
                                     resultSet.getString("name"),
                                     resultSet.getString("img"),
                                     resultSet.getString("origin"),
@@ -170,5 +170,20 @@ public class PlantDao implements Dao<Plant> {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public List<Integer> getFavourites(int userId) {
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "SELECT card_id from favourites where user_id=" + userId;
+            ResultSet resultSet = statement.executeQuery(sql);
+            List<Integer> list = new ArrayList<>();
+            while (resultSet.next()) {
+                list.add(resultSet.getInt("card_id"));
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

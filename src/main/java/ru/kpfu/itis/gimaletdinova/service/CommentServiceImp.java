@@ -61,12 +61,12 @@ public class CommentServiceImp implements CommentService {
                         userService.get(c.getAuthorId()),
                         getTime(c.getDateTime()),
                         c.getText(),
-                        postService.get(c.getPostId()),
-                        userService.get(c.getFeedbackUserId())))
+                        postService.get(c.getPostId())))
+//                        userService.get(c.getFeedbackUserId())))
                 .collect(Collectors.toList());
     }
 
     private String getTime(LocalDateTime time) {
-        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("hh:MM dd.MM.yyyy"));
+        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("hh:MM   dd.MM.yyyy"));
     }
 }

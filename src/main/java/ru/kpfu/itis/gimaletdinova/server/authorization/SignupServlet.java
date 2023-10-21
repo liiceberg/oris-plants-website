@@ -14,11 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(name="signupServlet", urlPatterns = "/signup")
+@WebServlet(name = "signupServlet", urlPatterns = "/signup")
 public class SignupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getSession().getAttribute("user_id") != null) {
+            resp.sendRedirect(req.getContextPath() + "/profile#logout");
+            return;
+        }
         resp.sendRedirect(req.getContextPath() + "/signup.ftl");
     }
 

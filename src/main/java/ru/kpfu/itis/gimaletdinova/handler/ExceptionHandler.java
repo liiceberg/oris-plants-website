@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+
 @WebServlet(name = "exceptionHandler", urlPatterns = "/handle")
 public class ExceptionHandler extends HttpServlet {
     @Override
@@ -21,7 +22,7 @@ public class ExceptionHandler extends HttpServlet {
     }
 
     private void handleException(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Throwable throwable = (Throwable) req.getAttribute("java.servlet.error.exception");
+        Throwable throwable = (Throwable) req.getAttribute("javax.servlet.error.exception");
         Integer code = (Integer) req.getAttribute("javax.servlet.error.status_code");
         String uri = (String) req.getAttribute("javax.servlet.error.request_uri");
 

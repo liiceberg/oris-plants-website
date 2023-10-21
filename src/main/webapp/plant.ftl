@@ -18,7 +18,7 @@
                 <tbody>
                 <tr>
                     <th scope="row">Category</th>
-                    <td>${plant.category}</td>
+                    <td>${plant.category.getName()}</td>
                 </tr>
                 <tr>
                     <th scope="row">Origin</th>

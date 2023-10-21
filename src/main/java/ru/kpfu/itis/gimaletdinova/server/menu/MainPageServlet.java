@@ -23,6 +23,11 @@ public class MainPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("plants", plantDao.getAll());
+
+        Object userId = req.getSession().getAttribute("user_id");
+        if (userId != null) {
+            req.setAttribute("fav", plantDao.getFavourites(Integer.parseInt(userId.toString())));
+        }
         req.getRequestDispatcher("/menu/main.ftl").forward(req, resp);
     }
 

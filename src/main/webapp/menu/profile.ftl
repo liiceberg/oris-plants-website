@@ -3,6 +3,8 @@
 
 <#macro title>Profile</#macro>
 
+<#macro scripts></#macro>
+
 <#macro content>
 
     <div class="card" style="width: 680px; margin: 0 auto;">
@@ -26,7 +28,7 @@
                     <a class="nav-link active" href="/edit">Edit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Log out</a>
+                    <a class="nav-link" href="/logout" id="logout">Log out</a>
                 </li>
             </ul>
         </div>

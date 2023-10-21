@@ -22,7 +22,7 @@ public enum Category {
         return name;
     }
 
-    public static Category get(String name) {
+    public static Category getCategory(String name) {
         switch (name) {
             case "Decorative-Blooming":
                 return Category.DECORATIVE_BLOOMING;

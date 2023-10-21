@@ -19,6 +19,14 @@ public class Comment {
         this.feedbackUserId = feedbackUserId;
     }
 
+    public Comment(int id, int authorId, LocalDateTime dateTime, String text, int postId) {
+        this.id = id;
+        this.authorId = authorId;
+        this.dateTime = dateTime;
+        this.text = text;
+        this.postId = postId;
+    }
+
     public Comment(int authorId, String text, int postId, int feedbackUserId) {
         this.authorId = authorId;
         this.text = text;
