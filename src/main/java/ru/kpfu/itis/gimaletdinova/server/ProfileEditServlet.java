@@ -61,7 +61,6 @@ public class ProfileEditServlet extends HttpServlet {
             user.setName(name);
             user.setLastname(lastname);
             if (img != null) {
-//                TODO delete previous img
                 user.setImg(img);
             }
             if (!newPassword.isEmpty()) {

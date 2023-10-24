@@ -1,7 +1,7 @@
 package ru.kpfu.itis.gimaletdinova.model;
 
-import ru.kpfu.itis.gimaletdinova.model.plant_enam.Category;
-import ru.kpfu.itis.gimaletdinova.model.plant_enam.Level;
+import ru.kpfu.itis.gimaletdinova.model.enam.Category;
+import ru.kpfu.itis.gimaletdinova.model.enam.Level;
 
 public class Plant {
     private int id;

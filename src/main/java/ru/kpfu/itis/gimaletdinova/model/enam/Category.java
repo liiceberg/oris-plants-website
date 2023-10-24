@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gimaletdinova.model.plant_enam;
+package ru.kpfu.itis.gimaletdinova.model.enam;
 
 public enum Category {
     DECORATIVE_BLOOMING("Decorative-Blooming"),

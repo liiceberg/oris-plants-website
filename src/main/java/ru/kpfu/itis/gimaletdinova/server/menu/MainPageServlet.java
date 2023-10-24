@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name="mainPageServlet", urlPatterns = "/main")
 public class MainPageServlet extends HttpServlet {
@@ -33,6 +34,15 @@ public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath() + "/menu/main.ftl");
+        int plantId = Integer.parseInt(req.getParameter("id"));
+        int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
+        if (plantDao.getFavourites(userId).contains(plantId)) {
+            plantDao.removeFavourite(userId, plantId);
+            resp.getWriter().write("del_fav");
+        } else {
+            plantDao.addFavourite(userId, plantId);
+            resp.getWriter().write("add_fav");
+        }
+
     }
 }

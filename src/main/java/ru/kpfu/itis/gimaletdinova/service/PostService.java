@@ -9,4 +9,5 @@ public interface PostService {
     List<PostDto> getAll();
     PostDto get(int id);
     void save(Post post);
+    void delete(int id);
 }

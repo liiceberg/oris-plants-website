@@ -31,8 +31,8 @@ public class FavPadeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int cardId = Integer.parseInt(req.getParameter("id"));
         int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
-        req.setAttribute("plants", plantDao.getAll(userId));
-        req.getRequestDispatcher("/menu/favourites.ftl").forward(req, resp);
+        plantDao.removeFavourite(userId, cardId);
     }
 }

@@ -2,10 +2,11 @@
 <head>
     <meta charset="UTF-8">
     <title><@title></@title></title>
-
+    <#include "icon.ftl">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <nav class="container navbar navbar-expand-lg">
         <p class="navbar-brand">
             <img src="/img/icon.png" alt="Logo" class="d-inline-block align-text-bottom" width="36"/>
@@ -14,13 +15,16 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav navbar-nav-underline">
                 <li class="nav-item">
-                    <a href="/main" class="nav-link">Main</a>
+                    <a href="/main" class="nav-link">Plants</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/illnesses" class="nav-link">Pests and diseases</a>
                 </li>
                 <li class="nav-item">
                     <a href="/favourites" class="nav-link">Favourites</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/help" class="nav-link">Help</a>
+                    <a href="/help" class="nav-link">Forum</a>
                 </li>
                 <li class="nav-item">
                     <a href="/myposts" class="nav-link">My Posts</a>

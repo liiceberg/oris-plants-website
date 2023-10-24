@@ -2,8 +2,8 @@ package ru.kpfu.itis.gimaletdinova.dao.implementations;
 
 import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.model.Plant;
-import ru.kpfu.itis.gimaletdinova.model.plant_enam.Category;
-import ru.kpfu.itis.gimaletdinova.model.plant_enam.Level;
+import ru.kpfu.itis.gimaletdinova.model.enam.Category;
+import ru.kpfu.itis.gimaletdinova.model.enam.Level;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class PlantDao implements Dao<Plant> {
     public List<Plant> getAll() {
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT * from plants order by category";
+            String sql = "SELECT * from plants order by name";
             ResultSet resultSet = statement.executeQuery(sql);
             List<Plant> plants = new ArrayList<>();
             if (resultSet != null) {
@@ -128,8 +128,8 @@ public class PlantDao implements Dao<Plant> {
     }
 
     @Override
-    public void delete(Plant plant) {
-        String sql = "delete from plans where id=" + plant.getId();
+    public void delete(int id) {
+        String sql = "delete from plans where id=" + id;
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
@@ -183,6 +183,33 @@ public class PlantDao implements Dao<Plant> {
             }
             return list;
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addFavourite(int userId, int cardId) {
+        try {
+            String sql = "insert into favourites (user_id, card_id) values (?, ?);";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, cardId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeFavourite(int userId, int cardId) {
+        try {
+            String sql = "delete from favourites where user_id=? and card_id=?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, cardId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

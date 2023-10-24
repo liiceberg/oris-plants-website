@@ -17,7 +17,6 @@ public class FileDownloadUtil {
     private static final String FILE_PATH_PREFIX = "/tmp";
     private static final Integer DIRECTORIES_COUNT = 100;
     public static String saveImg(Part part) throws IOException {
-
         String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         File file = new File(FILE_PATH_PREFIX +
                 File.separator +

@@ -3,27 +3,46 @@
 
 <#macro title>Favourites</#macro>
 
-<#macro scripts></#macro>
+<#macro scripts>
+    <script>
+        $(document).ready(function () {
+
+            $(".like-btn").click(function () {
+
+                let id = $(this).val()
+
+                $.post("/favourites", {
+                    "id": id
+                }, function () {
+                    $("#plant-" + id).remove()
+                })
+            })
+
+        })
+    </script>
+</#macro>
 
 <#macro content>
-    <div class="content container" style="margin: 0 auto" style="width: 640px;">
-        <#list plants as plant>
-        <#assign name = plant.category.name>
-            <a class="card" href="/plant/${plant.name}?id=${plant.id}" style="text-decoration: none">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="${plant.img}" class="img-fluid rounded-start">
+<div class="content container">
+    <#list plants as plant>
+        <div class="card" id="plant-${plant.id}">
+            <div class="row g-0" id="plant-${plant.id}">
+                <a class="col-md-4" href="/plant/${plant.name}?id=${plant.id}">
+                    <img src="${plant.img}" class="img-fluid rounded-start">
+                </a>
+                <div class="col-md-8">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5 class="card-title">${plant.name}</h5>
+                        <button class="btn btn-subtle text-end like-btn" type="button" value="${plant.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card-header d-flex justify-content-between">
-                            <h5 class="card-title">${plant.name}</h5>
-                            <button class="btn btn-subtle text-end" type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="card-body">
+                    <div class="card-body">
+                        <a href="/plant/${plant.name}?id=${plant.id}" style="text-decoration: none; color: black">
                             <p class="card-text"><strong>${plant.category.getName()}</strong></p>
                             <p class="card-text">
                                 ${plant.description[0..300]}...
@@ -36,14 +55,13 @@
                                     </svg>
                                 </#list>
                             </p>
-                        </div>
+                        </a>
                     </div>
                 </div>
-
-            </a>
-            <br>
-        </#list>
-    </div>
-</#macro>
-
+            </div>
+        </div>
+        <br>
+    </#list>
+    </#macro>
+</div>
 </html>

@@ -29,4 +29,9 @@ public class HomeServlet extends HttpServlet {
         req.getRequestDispatcher("/menu/home.ftl").forward(req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int postId = Integer.parseInt(req.getParameter("id"));
+        postService.delete(postId);
+    }
 }

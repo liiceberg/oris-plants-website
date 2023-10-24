@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gimaletdinova.model.plant_enam;
+package ru.kpfu.itis.gimaletdinova.model.enam;
 
 public enum Level {
     FIRST(1), SECOND(2), THIRD(3), FOURTH(4), FIFTH(5);

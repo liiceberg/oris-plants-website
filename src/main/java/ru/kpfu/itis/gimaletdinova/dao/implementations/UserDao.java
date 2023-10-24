@@ -132,8 +132,8 @@ public class UserDao implements Dao<User> {
     }
 
     @Override
-    public void delete(User user) {
-        String sql = "delete from users where id=" + user.getId();
+    public void delete(int id) {
+        String sql = "delete from users where id=" + id;
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);

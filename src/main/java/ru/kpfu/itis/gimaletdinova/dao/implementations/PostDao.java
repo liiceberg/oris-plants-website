@@ -127,8 +127,8 @@ public class PostDao implements Dao<Post> {
     }
 
     @Override
-    public void delete(Post post) {
-        String sql = "delete from posts where id=" + post.getId();
+    public void delete(int id) {
+        String sql = "delete from posts where id=" + id;
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);

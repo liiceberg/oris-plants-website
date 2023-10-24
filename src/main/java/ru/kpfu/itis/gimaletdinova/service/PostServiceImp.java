@@ -49,6 +49,11 @@ public class PostServiceImp implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(int id) {
+        postDao.delete(id);
+    }
+
     private String getTime(LocalDateTime time) {
         return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("hh:MM   dd.MM.yyyy"));
     }

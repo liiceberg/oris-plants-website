@@ -124,8 +124,8 @@ public class CommentDao implements Dao<Comment> {
     }
 
     @Override
-    public void delete(Comment comment) {
-        String sql = "delete from comments where id=" + comment.getId();
+    public void delete(int id) {
+        String sql = "delete from comments where id=" + id;
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sql);
