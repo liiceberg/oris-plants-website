@@ -5,6 +5,7 @@ import ru.kpfu.itis.gimaletdinova.dao.implementations.PostDao;
 import ru.kpfu.itis.gimaletdinova.dto.PostDto;
 import ru.kpfu.itis.gimaletdinova.model.Post;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -23,38 +24,61 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<PostDto> getAll() {
-        return postDao
-                .getAll()
-                .stream()
-                .map(p -> new PostDto(p.getId(), p.getTitle(), p.getText(), p.getImg(), userService.get(p.getAuthorId()), getTime(p.getDateTime())))
-                .collect(Collectors.toList());
+        try {
+            return postDao
+                    .getAll()
+                    .stream()
+                    .map(p -> new PostDto(p.getId(), p.getTitle(), p.getText(), p.getImg(), userService.get(p.getAuthorId()), getTime(p.getDateTime())))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            return null;
+        }
     }
+
     @Override
     public PostDto get(int id) {
-        Post p = postDao.get(id);
-
-        return new PostDto(p.getId(), p.getTitle(), p.getText(), p.getImg(), userService.get(p.getAuthorId()), getTime(p.getDateTime()));
+        try {
+            Post p = postDao.get(id);
+            return new PostDto(p.getId(), p.getTitle(), p.getText(), p.getImg(), userService.get(p.getAuthorId()), getTime(p.getDateTime()));
+        }
+        catch (SQLException e) {
+            return null;
+        }
     }
 
     @Override
-    public void save(Post post) {
-        postDao.save(post);
+    public boolean save(Post post) {
+        try {
+            postDao.save(post);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public List<PostDto> getAll(int userId) {
-        return postDao
-                .getAll(userId)
-                .stream()
-                .map(p -> new PostDto(p.getId(), p.getTitle(), p.getText(), p.getImg(), userService.get(p.getAuthorId()), getTime(p.getDateTime())))
-                .collect(Collectors.toList());
+        try {
+            return postDao
+                    .getAll(userId)
+                    .stream()
+                    .map(p -> new PostDto(p.getId(), p.getTitle(), p.getText(), p.getImg(), userService.get(p.getAuthorId()), getTime(p.getDateTime())))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     @Override
-    public void delete(int id) {
-        postDao.delete(id);
+    public boolean delete(int id) {
+        try {
+            postDao.delete(id);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     private String getTime(LocalDateTime time) {
-        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("hh:MM   dd.MM.yyyy"));
+        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:MM   dd.MM.yyyy"));
     }
 }

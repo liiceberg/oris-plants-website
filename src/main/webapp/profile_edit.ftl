@@ -48,6 +48,7 @@
         <#if password_letters_error??>Password must contain letters<br></#if>
         <#if password_dig_error??>Password must contain digits<br></#if>
         <#if old_password_error??>Old password entered incorrect<br></#if>
+        <#if db_error??>Sorry, can not edit information<br></#if>
     </div>
 </#macro>
 

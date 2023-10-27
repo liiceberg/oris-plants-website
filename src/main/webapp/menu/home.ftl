@@ -55,7 +55,7 @@
                                      style="width: 400px; margin: 0 auto; display: block"/></#if>
             </div>
             <div class="card-footer d-flex">
-                <a class="btn btn-link p-0 me-auto fw-bold" href="/post/${post.id}" style="text-decoration: none">Read
+                <a class="btn btn-link p-0 me-auto fw-bold" href="/post?id=${post.id}" style="text-decoration: none">Read
                     more</a>
             </div>
         </div>

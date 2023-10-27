@@ -1,3 +1,4 @@
+
 <html lang="en">
 
 <#include "basic/base.ftl">
@@ -9,11 +10,30 @@
         $(document).on("click", "#save-button", function () {
             let text = $("#text").val()
 
-            $.post("/post/", {
+            $.post("/post?id=" + ${post.id}, {
                 "text": text,
-                "feedback": -1
-            }, function (response) {
-                // alert(response)
+                "feedback": -1,
+            }, function (comment) {
+                $("#comments-container").prepend(
+                    "<div class=\"d-flex justify-content-between\">\n" +
+                    "                        <div class=\"d-flex align-items-center\">\n" +
+                    "                            <img src=\"" + comment.author.img + "\" class=\"avatar avatar-lg fs-5\" alt=\"ava\" width=\"36px\"\n" +
+                    "                                 style=\"border-radius: 18px\"/>\n" +
+                    "                            <h6 class=\"text-start ms-3\">" + comment.author.name + " " + comment.author.lastname + "</h6>\n" +
+                    "                        </div>\n" +
+                    "                        <button class=\"btn btn-subtle text-end\" type=\"button\">\n" +
+                    "                            <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\"\n" +
+                    "                                 class=\"bi bi-x\" viewBox=\"0 0 16 16\">\n" +
+                    "                                <path d=\"M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z\"/>\n" +
+                    "                            </svg>\n" +
+                    "                        </button>\n" +
+                    "                    </div>\n" +
+                    "                    <p class=\"text-start mt-3\">" + comment.text + "</p>\n" +
+                    "                    <span class=\"text-end text-muted\">" + comment.dateTime + "</span>\n" +
+                    "                    <hr class=\"border border-secondary border-1 opacity-30\">\n" +
+                    "                    <br>"
+                )
+                $("#text").val("")
             })
         })
     </script>
@@ -35,12 +55,12 @@
         </div>
         <br>
 
-        <form action="/post/">
+        <form>
             <div class="mb-3">
                 <label for="text" class="form-label text-muted">Leave your comment</label>
                 <textarea id="text" class="form-control"></textarea>
             </div>
-            <button id="save-button" class="btn btn-primary">Send</button>
+            <button type="button" id="save-button" class="btn btn-primary">Send</button>
         </form>
 
         <br>
@@ -52,17 +72,18 @@
                         <div class="d-flex align-items-center">
                             <img src="${comment.author.img}" class="avatar avatar-lg fs-5" alt="ava" width="36px"
                                  style="border-radius: 18px"/>
-                            <h6 class="text-start">${comment.author}</h6>
+                            <h6 class="text-start ms-3">${comment.author}</h6>
                         </div>
-<#--                        <#if comment.author>-->
-                            <button class="btn btn-subtle text-end" type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                </svg>
-                            </button>
-<#--                        </#if>-->
+                        <#--                        <#if comment.author>-->
+                        <button class="btn btn-subtle text-end" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                        <#--                        </#if>-->
                     </div>
-                    <p class="text-start">${comment.text}</p>
+                    <p class="text-start mt-3">${comment.text}</p>
                     <span class="text-end text-muted">${comment.dateTime}</span>
                     <hr class="border border-secondary border-1 opacity-30">
                     <br>

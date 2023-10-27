@@ -3,6 +3,7 @@ package ru.kpfu.itis.gimaletdinova.dao.implementations;
 import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.model.Plant;
 import ru.kpfu.itis.gimaletdinova.model.enam.Category;
+import ru.kpfu.itis.gimaletdinova.model.enam.IllegalEnumValueException;
 import ru.kpfu.itis.gimaletdinova.model.enam.Level;
 
 import java.sql.*;
@@ -18,199 +19,155 @@ public class PlantDao implements Dao<Plant> {
     }
 
     @Override
-    public Plant get(int id) {
-        try {
-            Statement statement = connection.createStatement();
-            String sql = "select * from plants where id='" + id + "'";
-            ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet != null) {
-                resultSet.next();
-                return new Plant(
-                        resultSet.getInt("id"),
-                        Category.getCategory(resultSet.getString("category")),
-                        resultSet.getString("name"),
-                        resultSet.getString("img"),
-                        resultSet.getString("origin"),
-                        resultSet.getString("description"),
-                        resultSet.getInt("high"),
-                        Level.valueOf(resultSet.getInt("light")),
-                        Level.valueOf(resultSet.getInt("watering")),
-                        resultSet.getBoolean("toxicity"),
-                        Level.valueOf(resultSet.getInt("care_difficulty"))
-
-                );
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+    public Plant get(int id) throws SQLException, IllegalEnumValueException {
+        Statement statement = connection.createStatement();
+        String sql = "select * from plants where id='" + id + "'";
+        ResultSet resultSet = statement.executeQuery(sql);
+        resultSet.next();
+        return new Plant(
+                resultSet.getInt("id"),
+                Category.getCategory(resultSet.getString("category")),
+                resultSet.getString("name"),
+                resultSet.getString("img"),
+                resultSet.getString("origin"),
+                resultSet.getString("description"),
+                resultSet.getInt("high"),
+                Level.valueOf(resultSet.getInt("light")),
+                Level.valueOf(resultSet.getInt("watering")),
+                resultSet.getBoolean("toxicity"),
+                Level.valueOf(resultSet.getInt("care_difficulty"))
+        );
     }
 
     @Override
-    public List<Plant> getAll() {
-        try {
-            Statement statement = connection.createStatement();
-            String sql = "SELECT * from plants order by name";
-            ResultSet resultSet = statement.executeQuery(sql);
-            List<Plant> plants = new ArrayList<>();
-            if (resultSet != null) {
-                while (resultSet.next()) {
-                    plants.add(
-                            new Plant(
-                                    resultSet.getInt("id"),
-                                    Category.getCategory(resultSet.getString("category")),
-                                    resultSet.getString("name"),
-                                    resultSet.getString("img"),
-                                    resultSet.getString("origin"),
-                                    resultSet.getString("description"),
-                                    resultSet.getInt("high"),
-                                    Level.valueOf(resultSet.getInt("light")),
-                                    Level.valueOf(resultSet.getInt("watering")),
-                                    resultSet.getBoolean("toxicity"),
-                                    Level.valueOf(resultSet.getInt("care_difficulty"))
+    public List<Plant> getAll() throws SQLException, IllegalEnumValueException {
+        Statement statement = connection.createStatement();
+        String sql = "SELECT * from plants order by name";
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<Plant> plants = new ArrayList<>();
 
-                            )
-                    );
-                }
-            }
-            return plants;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        while (resultSet.next()) {
+            plants.add(
+                    new Plant(
+                            resultSet.getInt("id"),
+                            Category.getCategory(resultSet.getString("category")),
+                            resultSet.getString("name"),
+                            resultSet.getString("img"),
+                            resultSet.getString("origin"),
+                            resultSet.getString("description"),
+                            resultSet.getInt("high"),
+                            Level.valueOf(resultSet.getInt("light")),
+                            Level.valueOf(resultSet.getInt("watering")),
+                            resultSet.getBoolean("toxicity"),
+                            Level.valueOf(resultSet.getInt("care_difficulty"))
+
+                    )
+            );
         }
-        return null;
+
+        return plants;
     }
 
     @Override
-    public void save(Plant plant) {
+    public void save(Plant plant) throws SQLException {
         String sql = "insert into plants (category, name, img, origin, description, high, light, watering," +
                 " toxicity, care_difficulty) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, plant.getCategory().name());
-            preparedStatement.setString(2, plant.getName());
-            preparedStatement.setString(3, plant.getImg());
-            preparedStatement.setString(4, plant.getOrigin());
-            preparedStatement.setString(5, plant.getDescription());
-            preparedStatement.setInt(6, plant.getHigh());
-            preparedStatement.setInt(7, plant.getLight().getValue());
-            preparedStatement.setInt(8, plant.getWatering().getValue());
-            preparedStatement.setBoolean(9, plant.getToxicity());
-            preparedStatement.setInt(10, plant.getCareDifficulty().getValue());
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, plant.getCategory().name());
+        preparedStatement.setString(2, plant.getName());
+        preparedStatement.setString(3, plant.getImg());
+        preparedStatement.setString(4, plant.getOrigin());
+        preparedStatement.setString(5, plant.getDescription());
+        preparedStatement.setInt(6, plant.getHigh());
+        preparedStatement.setInt(7, plant.getLight().getValue());
+        preparedStatement.setInt(8, plant.getWatering().getValue());
+        preparedStatement.setBoolean(9, plant.getToxicity());
+        preparedStatement.setInt(10, plant.getCareDifficulty().getValue());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        preparedStatement.executeUpdate();
     }
 
     @Override
-    public void update(Plant plant) {
+    public void update(Plant plant) throws SQLException {
         String sql = "update plants set category=?, name=?, img=?, origin=?, description=?, high=?, light=?," +
                 " watering=?, toxicity=?, care_difficulty=? where id=?;";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, plant.getCategory().name());
-            preparedStatement.setString(2, plant.getName());
-            preparedStatement.setString(3, plant.getImg());
-            preparedStatement.setString(4, plant.getOrigin());
-            preparedStatement.setString(5, plant.getDescription());
-            preparedStatement.setInt(6, plant.getHigh());
-            preparedStatement.setInt(7, plant.getLight().getValue());
-            preparedStatement.setInt(8, plant.getWatering().getValue());
-            preparedStatement.setBoolean(9, plant.getToxicity());
-            preparedStatement.setInt(10, plant.getCareDifficulty().getValue());
-            preparedStatement.setInt(11, plant.getId());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, plant.getCategory().name());
+        preparedStatement.setString(2, plant.getName());
+        preparedStatement.setString(3, plant.getImg());
+        preparedStatement.setString(4, plant.getOrigin());
+        preparedStatement.setString(5, plant.getDescription());
+        preparedStatement.setInt(6, plant.getHigh());
+        preparedStatement.setInt(7, plant.getLight().getValue());
+        preparedStatement.setInt(8, plant.getWatering().getValue());
+        preparedStatement.setBoolean(9, plant.getToxicity());
+        preparedStatement.setInt(10, plant.getCareDifficulty().getValue());
+        preparedStatement.setInt(11, plant.getId());
+
+        preparedStatement.executeUpdate();
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException {
         String sql = "delete from plans where id=" + id;
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sql);
     }
 
-    public List<Plant> getAll(int userId) {
-        try {
-            Statement statement = connection.createStatement();
-            String sql = "SELECT * from favourites inner join plants on favourites.card_id=plants.id where user_id="
-                    + userId;
-            ResultSet resultSet = statement.executeQuery(sql);
-            List<Plant> plants = new ArrayList<>();
-            if (resultSet != null) {
-                while (resultSet.next()) {
-                    plants.add(
-                            new Plant(
-                                    resultSet.getInt("id"),
-                                    Category.getCategory(resultSet.getString("category")),
-                                    resultSet.getString("name"),
-                                    resultSet.getString("img"),
-                                    resultSet.getString("origin"),
-                                    resultSet.getString("description"),
-                                    resultSet.getInt("high"),
-                                    Level.valueOf(resultSet.getInt("light")),
-                                    Level.valueOf(resultSet.getInt("watering")),
-                                    resultSet.getBoolean("toxicity"),
-                                    Level.valueOf(resultSet.getInt("care_difficulty"))
+    public List<Plant> getAll(int userId) throws SQLException, IllegalEnumValueException {
+        Statement statement = connection.createStatement();
+        String sql = "SELECT * from favourites inner join plants on favourites.card_id=plants.id where user_id="
+                + userId;
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<Plant> plants = new ArrayList<>();
+        while (resultSet.next()) {
+            plants.add(
+                    new Plant(
+                            resultSet.getInt("id"),
+                            Category.getCategory(resultSet.getString("category")),
+                            resultSet.getString("name"),
+                            resultSet.getString("img"),
+                            resultSet.getString("origin"),
+                            resultSet.getString("description"),
+                            resultSet.getInt("high"),
+                            Level.valueOf(resultSet.getInt("light")),
+                            Level.valueOf(resultSet.getInt("watering")),
+                            resultSet.getBoolean("toxicity"),
+                            Level.valueOf(resultSet.getInt("care_difficulty"))
 
-                            )
-                    );
-                }
-            }
-            return plants;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+                    )
+            );
+
         }
-        return null;
+        return plants;
     }
 
-    public List<Integer> getFavourites(int userId) {
-        try {
-            Statement statement = connection.createStatement();
-            String sql = "SELECT card_id from favourites where user_id=" + userId;
-            ResultSet resultSet = statement.executeQuery(sql);
-            List<Integer> list = new ArrayList<>();
-            while (resultSet.next()) {
-                list.add(resultSet.getInt("card_id"));
-            }
-            return list;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public List<Integer> getFavourites(int userId) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "SELECT card_id from favourites where user_id=" + userId;
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<Integer> list = new ArrayList<>();
+        while (resultSet.next()) {
+            list.add(resultSet.getInt("card_id"));
         }
+        return list;
     }
 
-    public void addFavourite(int userId, int cardId) {
-        try {
-            String sql = "insert into favourites (user_id, card_id) values (?, ?);";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, cardId);
-            preparedStatement.executeUpdate();
+    public void addFavourite(int userId, int cardId) throws SQLException {
+        String sql = "insert into favourites (user_id, card_id) values (?, ?);";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, cardId);
+        preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    public void removeFavourite(int userId, int cardId) {
-        try {
-            String sql = "delete from favourites where user_id=? and card_id=?;";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, cardId);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    public void removeFavourite(int userId, int cardId) throws SQLException {
+        String sql = "delete from favourites where user_id=? and card_id=?;";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.setInt(2, cardId);
+        preparedStatement.executeUpdate();
     }
 }

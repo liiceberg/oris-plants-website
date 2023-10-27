@@ -8,5 +8,6 @@ public class KeyNames {
     public static final String POST_DAO = "postDao";
     public static final String COMMENT_DAO = "commentDao";
     public static final String PLANT_DAO = "plantDao";
+    public static final String DAMAGE_DAO = "damageDao";
 
 }

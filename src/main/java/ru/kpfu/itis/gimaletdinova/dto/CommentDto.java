@@ -22,6 +22,12 @@ public class CommentDto {
         this.post = post;
     }
 
+    public CommentDto(UserDto author, String dateTime, String text) {
+        this.author = author;
+        this.dateTime = dateTime;
+        this.text = text;
+    }
+
     public UserDto getAuthor() {
         return author;
     }

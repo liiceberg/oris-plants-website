@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Map;
 
 @WebServlet(name = "profileEditServlet", urlPatterns = "/edit")
@@ -40,7 +41,7 @@ public class ProfileEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getUser(req);
-        req.getRequestDispatcher("profile_edit.ftl").forward(req, resp);
+        req.getRequestDispatcher("/profile_edit.ftl").forward(req, resp);
     }
 
     @Override
@@ -53,27 +54,33 @@ public class ProfileEditServlet extends HttpServlet {
         String oldPassword = req.getParameter("old_password");
         String newPassword = req.getParameter("new_password");
         String newPassword2 = req.getParameter("new_password_2");
+        try {
+            if (!isFormCorrect(req, name, lastname, oldPassword, newPassword, newPassword2)) {
+                req.getRequestDispatcher("/profile_edit.ftl").forward(req, resp);
+            } else {
 
-        if (!isFormCorrect(req, name, lastname, oldPassword, newPassword, newPassword2)) {
-            req.getRequestDispatcher("profile_edit.ftl").forward(req, resp);
-        } else {
-            User user = userDao.get(getUserId(req));
-            user.setName(name);
-            user.setLastname(lastname);
-            if (img != null) {
-                user.setImg(img);
-            }
-            if (!newPassword.isEmpty()) {
-                user.setPassword(PasswordUtil.encrypt(newPassword));
-            }
-            userDao.update(user);
+                User user = userDao.get(getUserId(req));
+                user.setName(name);
+                user.setLastname(lastname);
+                if (img != null) {
+                    user.setImg(img);
+                }
+                if (!newPassword.isEmpty()) {
+                    user.setPassword(PasswordUtil.encrypt(newPassword));
+                }
+                userDao.update(user);
 
-            resp.sendRedirect(req.getContextPath() + "/profile");
+
+                resp.sendRedirect(req.getContextPath() + "/profile");
+            }
+        } catch (SQLException ex) {
+            req.setAttribute("db_error", true);
+            req.getRequestDispatcher("/profile_edit.ftl").forward(req, resp);
         }
     }
 
     private Boolean isFormCorrect(HttpServletRequest req, String name, String lastname,
-                                  String oldPassword, String newPassword, String newPassword2) {
+                                  String oldPassword, String newPassword, String newPassword2) throws SQLException {
         if (name.isEmpty() || lastname.isEmpty()) {
             req.setAttribute("empty_field_error", true);
             return false;

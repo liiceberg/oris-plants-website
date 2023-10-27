@@ -12,7 +12,7 @@ public enum Level {
         return value;
     }
 
-    public static Level valueOf(int value) {
+    public static Level valueOf(int value) throws IllegalEnumValueException{
         switch (value) {
             case 1:
                 return Level.FIRST;
@@ -24,7 +24,8 @@ public enum Level {
                 return Level.FOURTH;
             case 5:
                 return Level.FIFTH;
+            default:
+                throw new IllegalEnumValueException();
         }
-        return null;
     }
 }

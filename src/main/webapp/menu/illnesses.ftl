@@ -6,6 +6,9 @@
 <#macro scripts></#macro>
 
 <#macro content>
+    <#if items??>
+
+    </#if>
 </#macro>
 
 </html>

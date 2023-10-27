@@ -1,14 +1,15 @@
 <html lang="en">
-<#include "basic/base_with_header.ftl">
+<#include "basic/base.ftl">
 
 <#macro title>Log in</#macro>
 
-<#macro script></#macro>
+<#macro scripts></#macro>
 
 <#macro content>
-
+    <#include "basic/header.ftl">
+    <div class="content container">
         <p class="text-center">
-        For the first time on our website? <a class="btn btn-secondary" href="/signup">Sign up</a>
+            For the first time on our website? <a class="btn btn-secondary" href="/signup">Sign up</a>
         </p>
         <br>
         <form style="width: 500px; margin: 0 auto" action="login" method="post">
@@ -28,10 +29,10 @@
                 <input type="submit" class="btn btn-primary" value="Sign in"/>
             </div>
         </form>
-        <#if error??>
-            <p class="text-center">Login or password entered incorrectly</p>
-        </#if>
 
+        <#if error??><p class="text-center">Login or password entered incorrectly</p></#if>
+        <#if db_error??><p class="text-center">Sorry, it is not possible to log in</p></#if>
+    </div>
 </#macro>
 
 </html>

@@ -22,7 +22,7 @@ public enum Category {
         return name;
     }
 
-    public static Category getCategory(String name) {
+    public static Category getCategory(String name) throws IllegalEnumValueException{
         switch (name) {
             case "Decorative-Blooming":
                 return Category.DECORATIVE_BLOOMING;
@@ -44,7 +44,8 @@ public enum Category {
                 return Category.FRUITING;
             case "Bulbous":
                 return Category.BULBOUS;
+            default:
+                throw new IllegalEnumValueException();
         }
-        return null;
     }
 }

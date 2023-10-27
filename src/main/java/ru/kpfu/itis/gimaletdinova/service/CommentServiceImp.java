@@ -5,6 +5,7 @@ import ru.kpfu.itis.gimaletdinova.dao.implementations.CommentDao;
 import ru.kpfu.itis.gimaletdinova.dto.CommentDto;
 import ru.kpfu.itis.gimaletdinova.model.Comment;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -25,48 +26,65 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public List<CommentDto> getAll() {
-        return commentDao
-                .getAll()
-                .stream()
-                .map(c -> new CommentDto(
-                        userService.get(c.getAuthorId()),
-                        getTime(c.getDateTime()),
-                        c.getText(),
-                        postService.get(c.getPostId()),
-                        userService.get(c.getFeedbackUserId())))
-                .collect(Collectors.toList());
+        try {
+            return commentDao
+                    .getAll()
+                    .stream()
+                    .map(c -> new CommentDto(
+                            userService.get(c.getAuthorId()),
+                            getTime(c.getDateTime()),
+                            c.getText(),
+                            postService.get(c.getPostId()),
+                            userService.get(c.getFeedbackUserId())))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     @Override
     public CommentDto get(int id) {
-        Comment c = commentDao.get(id);
-        return new CommentDto(
-                userService.get(c.getAuthorId()),
-                getTime(c.getDateTime()),
-                c.getText(),
-                postService.get(c.getPostId()),
-                userService.get(c.getFeedbackUserId()));
+        try {
+            Comment c = commentDao.get(id);
+            return new CommentDto(
+                    userService.get(c.getAuthorId()),
+                    getTime(c.getDateTime()),
+                    c.getText(),
+                    postService.get(c.getPostId()),
+                    userService.get(c.getFeedbackUserId()));
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     @Override
-    public void save(Comment c) {
-        commentDao.save(c);
+    public boolean save(Comment c) {
+        try {
+            commentDao.save(c);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public List<CommentDto> getAll(int postId) {
-        return commentDao
-                .getAll(postId)
-                .stream()
-                .map(c -> new CommentDto(
-                        userService.get(c.getAuthorId()),
-                        getTime(c.getDateTime()),
-                        c.getText(),
-                        postService.get(c.getPostId())))
-//                        userService.get(c.getFeedbackUserId())))
-                .collect(Collectors.toList());
+        try {
+            return commentDao
+                    .getAll(postId)
+                    .stream()
+                    .map(c -> new CommentDto(
+                            userService.get(c.getAuthorId()),
+                            getTime(c.getDateTime()),
+                            c.getText(),
+                            postService.get(c.getPostId())))
+    //                        userService.get(c.getFeedbackUserId())))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     private String getTime(LocalDateTime time) {
-        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("hh:MM   dd.MM.yyyy"));
+        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:MM   dd.MM.yyyy"));
     }
 }
