@@ -1,4 +1,4 @@
-package ru.kpfu.itis.gimaletdinova.service;
+package ru.kpfu.itis.gimaletdinova.service.implementations;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,6 +9,7 @@ import ru.kpfu.itis.gimaletdinova.dao.implementations.UserDao;
 import ru.kpfu.itis.gimaletdinova.dto.UserDto;
 import ru.kpfu.itis.gimaletdinova.model.User;
 import ru.kpfu.itis.gimaletdinova.model.enam.IllegalEnumValueException;
+import ru.kpfu.itis.gimaletdinova.service.UserService;
 import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
 

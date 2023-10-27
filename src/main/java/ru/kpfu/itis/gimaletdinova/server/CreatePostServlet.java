@@ -2,9 +2,8 @@ package ru.kpfu.itis.gimaletdinova.server;
 
 import ru.kpfu.itis.gimaletdinova.Const;
 import ru.kpfu.itis.gimaletdinova.KeyNames;
-import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.model.Post;
-import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.PostServiceImp;
 import ru.kpfu.itis.gimaletdinova.util.FileDownloadUtil;
 
 import javax.servlet.ServletConfig;

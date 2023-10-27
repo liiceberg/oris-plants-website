@@ -5,9 +5,9 @@
 
 <#macro scripts></#macro>
 <#macro content>
-    <div class="content container">
+    <div class="content container" style="width: 500px; margin: 0 auto">
         <h3 class="text-center mt-3">New Post</h3>
-        <form method="post" action="/add" enctype="multipart/form-data" style="width: 500px; margin: 0 auto">
+        <form method="post" action="/add" enctype="multipart/form-data" >
             <div class="mb-3">
                 <label for="img" class="form-label">Add picture</label>
                 <input type="file" class="form-control" id="img" name="img"/>
@@ -24,7 +24,8 @@
                 <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
-        <#if empty_title_error??><p class="text-center">Post can't be created without text</p></#if>
+        <br>
+        <#if empty_title_error??><div class="text-center alert alert-danger">Post can't be created without text</div></#if>
     </div>
 </#macro>
 

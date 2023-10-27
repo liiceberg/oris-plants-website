@@ -3,6 +3,10 @@ package ru.kpfu.itis.gimaletdinova.listener;
 import ru.kpfu.itis.gimaletdinova.KeyNames;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.*;
 import ru.kpfu.itis.gimaletdinova.service.*;
+import ru.kpfu.itis.gimaletdinova.service.implementations.CommentServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.DamageServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.PostServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.UserServiceImp;
 import ru.kpfu.itis.gimaletdinova.util.DatabaseConnectionUtil;
 
 import javax.servlet.ServletContextEvent;
@@ -23,6 +27,7 @@ public class InitListener implements ServletContextListener {
         UserService userService = new UserServiceImp(userDao);
         PostService postService = new PostServiceImp(postDao, userService);
         CommentService commentService = new CommentServiceImp(commentDao, userService, postService);
+        DamageService damageService = new DamageServiceImp(damageDao);
 
         sce.getServletContext().setAttribute(KeyNames.USER_DAO, userDao);
         sce.getServletContext().setAttribute(KeyNames.POST_DAO, postDao);
@@ -32,5 +37,6 @@ public class InitListener implements ServletContextListener {
         sce.getServletContext().setAttribute(KeyNames.USER_SERVICE, userService);
         sce.getServletContext().setAttribute(KeyNames.POST_SERVICE, postService);
         sce.getServletContext().setAttribute(KeyNames.COMMENT_SERVICE, commentService);
+        sce.getServletContext().setAttribute(KeyNames.DAMAGE_SERVICE, damageService);
     }
 }

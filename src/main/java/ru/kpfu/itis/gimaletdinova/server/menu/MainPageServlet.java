@@ -1,6 +1,7 @@
 package ru.kpfu.itis.gimaletdinova.server.menu;
 
 import ru.kpfu.itis.gimaletdinova.KeyNames;
+import ru.kpfu.itis.gimaletdinova.Messages;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.PlantDao;
 import ru.kpfu.itis.gimaletdinova.model.Plant;
 import ru.kpfu.itis.gimaletdinova.model.Post;
@@ -53,8 +54,14 @@ public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Object user = req.getSession().getAttribute("user_id");
+        if (user == null) {
+            resp.getWriter().write(Messages.LIKE_BTN_NOT_AVAILABLE_MESSAGE);
+            return;
+        }
+
         int plantId = Integer.parseInt(req.getParameter("id"));
-        int userId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
+        int userId = Integer.parseInt(user.toString());
         List<Integer> fav = new ArrayList<>();
         try {
             fav = plantDao.getFavourites(userId);

@@ -3,6 +3,7 @@ package ru.kpfu.itis.gimaletdinova.dao.implementations;
 import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.model.Damage;
 import ru.kpfu.itis.gimaletdinova.model.enam.CausativeAgent;
+import ru.kpfu.itis.gimaletdinova.model.enam.IllegalEnumValueException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,14 +17,14 @@ public class DamageDao implements Dao<Damage> {
     }
 
     @Override
-    public Damage get(int id) throws SQLException {
+    public Damage get(int id) throws SQLException, IllegalEnumValueException {
         Statement statement = connection.createStatement();
         String sql = "select * from damages where id='" + id + "'";
         ResultSet resultSet = statement.executeQuery(sql);
         resultSet.next();
         return new Damage(
                 resultSet.getInt("id"),
-                CausativeAgent.valueOf(resultSet.getString("causative_agent")),
+                CausativeAgent.valueOf(resultSet.getInt("causative_agent")),
                 resultSet.getString("description"),
                 resultSet.getString("symptoms"),
                 resultSet.getString("control_measures"),
@@ -32,9 +33,9 @@ public class DamageDao implements Dao<Damage> {
     }
 
     @Override
-    public List<Damage> getAll() throws SQLException {
+    public List<Damage> getAll() throws SQLException, IllegalEnumValueException {
         Statement statement = connection.createStatement();
-        String sql = "SELECT * from damages order by causative_agent";
+        String sql = "SELECT * from damages order by description";
         ResultSet resultSet = statement.executeQuery(sql);
         List<Damage> damages = new ArrayList<>();
 
@@ -42,7 +43,7 @@ public class DamageDao implements Dao<Damage> {
                 damages.add(
                         new Damage(
                                 resultSet.getInt("id"),
-                                CausativeAgent.valueOf(resultSet.getString("causative_agent")),
+                                CausativeAgent.valueOf(resultSet.getInt("causative_agent")),
                                 resultSet.getString("description"),
                                 resultSet.getString("symptoms"),
                                 resultSet.getString("control_measures"),

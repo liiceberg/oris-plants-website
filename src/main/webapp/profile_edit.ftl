@@ -42,13 +42,14 @@
                 <input type="submit" class="btn btn-primary" value="Save"/>
             </div>
         </form>
-        <#if empty_field_error??>Name and surname can't be empty<br></#if>
-        <#if passwords_not_equal_error??>Passwords not equal<br></#if>
-        <#if password_length_error??>Password must contain at least 8 characters<br></#if>
-        <#if password_letters_error??>Password must contain letters<br></#if>
-        <#if password_dig_error??>Password must contain digits<br></#if>
-        <#if old_password_error??>Old password entered incorrect<br></#if>
-        <#if db_error??>Sorry, can not edit information<br></#if>
+        <br>
+        <#if empty_field_error??><div class="text-center alert alert-danger">Name and surname can't be empty</div><br></#if>
+        <#if passwords_not_equal_error??><div class="text-center alert alert-danger">Passwords not equal</div><br></#if>
+        <#if password_length_error??><div class="text-center alert alert-danger">Password must contain at least 8 characters</div><br></#if>
+        <#if password_letters_error??><div class="text-center alert alert-danger">Password must contain letters</div><br></#if>
+        <#if password_dig_error??><div class="text-center alert alert-danger">Password must contain digits</div><br></#if>
+        <#if old_password_error??><div class="text-center alert alert-danger">Old password entered incorrect</div><br></#if>
+        <#if db_error??><div class="text-center alert alert-danger">Sorry, can not edit information</div><br></#if>
     </div>
 </#macro>
 

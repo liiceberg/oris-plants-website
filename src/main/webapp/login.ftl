@@ -29,9 +29,13 @@
                 <input type="submit" class="btn btn-primary" value="Sign in"/>
             </div>
         </form>
-
-        <#if error??><p class="text-center">Login or password entered incorrectly</p></#if>
-        <#if db_error??><p class="text-center">Sorry, it is not possible to log in</p></#if>
+        <br>
+        <div class="content container" style="width: 500px; margin: 0 auto">
+            <#if error??>
+                <div class="text-center alert alert-danger">Login or password entered incorrectly</div><br></#if>
+            <#if db_error??>
+                <div class="text-center alert alert-danger">Sorry, it is not possible to log in</div><br></#if>
+        </div>
     </div>
 </#macro>
 

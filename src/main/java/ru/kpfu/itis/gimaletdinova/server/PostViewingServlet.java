@@ -2,13 +2,14 @@ package ru.kpfu.itis.gimaletdinova.server;
 
 import org.json.JSONObject;
 import ru.kpfu.itis.gimaletdinova.KeyNames;
+import ru.kpfu.itis.gimaletdinova.Messages;
 import ru.kpfu.itis.gimaletdinova.dto.CommentDto;
 import ru.kpfu.itis.gimaletdinova.dto.PostDto;
 import ru.kpfu.itis.gimaletdinova.dto.UserDto;
 import ru.kpfu.itis.gimaletdinova.model.Comment;
-import ru.kpfu.itis.gimaletdinova.service.CommentServiceImp;
-import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
-import ru.kpfu.itis.gimaletdinova.service.UserServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.CommentServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.PostServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.UserServiceImp;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -22,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "postViewingServlet", urlPatterns = "/post")
 public class PostViewingServlet extends HttpServlet {
-
     private PostServiceImp postService;
     private CommentServiceImp commentService;
     private UserServiceImp userService;
@@ -50,12 +50,22 @@ public class PostViewingServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        resp.setContentType("application/json");
+//        req.getAttribute("feedback");
+        Object userId = req.getSession().getAttribute("user_id");
+        if (userId == null) {
+            JSONObject obj = new JSONObject();
+            obj.put("exc", Messages.COMMENT_NOT_AVAILABLE_MESSAGE);
+            resp.getWriter().write(obj.toString());
+            return;
+        }
         String text = req.getParameter("text");
         if (text.isEmpty()) {
             return;
         }
-        req.getAttribute("feedback");
-        int authorId = Integer.parseInt(req.getSession().getAttribute("user_id").toString());
+        int authorId = Integer.parseInt(userId.toString());
+
         Comment c = new Comment(authorId, text, postId);
         commentService.save(c);
 
@@ -64,7 +74,6 @@ public class PostViewingServlet extends HttpServlet {
 
         CommentDto dto = new CommentDto(user, datetime, text);
         JSONObject json = new JSONObject(dto);
-        resp.setContentType("application/json");
         resp.getWriter().write(json.toString());
     }
 }

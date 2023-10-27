@@ -21,13 +21,13 @@
                     <a href="/illnesses" class="nav-link">Pests and diseases</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/favourites" class="nav-link">Favourites</a>
-                </li>
-                <li class="nav-item">
                     <a href="/help" class="nav-link">Forum</a>
                 </li>
                 <li class="nav-item">
                     <a href="/myposts" class="nav-link">My Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/favourites" class="nav-link">Favourites</a>
                 </li>
                 <li class="nav-item">
                     <a href="/profile" class="nav-link">Profile</a>

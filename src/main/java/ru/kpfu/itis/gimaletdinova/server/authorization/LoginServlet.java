@@ -26,12 +26,12 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         if (req.getSession().getAttribute("user_id") != null) {
             resp.sendRedirect(req.getContextPath() + "/profile#logout");
             return;
         }
-        resp.sendRedirect(req.getContextPath() + "/login.ftl");
+        req.getRequestDispatcher("/login.ftl").forward(req, resp);
     }
 
 

@@ -33,12 +33,12 @@
             </div>
         </form>
 
-        <#if login_error??>User with this login already exist<br></#if>
-        <#if passwords_not_equal_error??>Passwords not equal<br></#if>
-        <#if password_length_error??>Password must contain at least 8 characters<br></#if>
-        <#if password_letters_error??>Password must contain letters<br></#if>
-        <#if password_dig_error??>Password must contain digits<br></#if>
-        <#if empty_field_error??>Fields must be not empty<br></#if>
+        <#if login_error??><div class="text-center alert alert-danger">User with this login already exist</div><br></#if>
+        <#if passwords_not_equal_error??><div class="text-center alert alert-danger">Passwords not equal</div><br></#if>
+        <#if password_length_error??><div class="text-center alert alert-danger">Password must contain at least 8 characters</div><br></#if>
+        <#if password_letters_error??><div class="text-center alert alert-danger">Password must contain letters</div><br></#if>
+        <#if password_dig_error??><div class="text-center alert alert-danger">Password must contain digits</div><br></#if>
+        <#if empty_field_error??><div class="text-center alert alert-danger">Fields must be not empty</div><br></#if>
     </div>
 </#macro>
 

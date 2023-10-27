@@ -1,9 +1,11 @@
-package ru.kpfu.itis.gimaletdinova.service;
+package ru.kpfu.itis.gimaletdinova.service.implementations;
 
 import ru.kpfu.itis.gimaletdinova.dao.Dao;
 import ru.kpfu.itis.gimaletdinova.dao.implementations.PostDao;
 import ru.kpfu.itis.gimaletdinova.dto.PostDto;
 import ru.kpfu.itis.gimaletdinova.model.Post;
+import ru.kpfu.itis.gimaletdinova.service.PostService;
+import ru.kpfu.itis.gimaletdinova.service.UserService;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;

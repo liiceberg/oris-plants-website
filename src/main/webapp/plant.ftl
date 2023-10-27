@@ -68,6 +68,22 @@
                             </#list>
                         </td>
                     </tr>
+                    <#if damages?has_content>
+                        <tr>
+                            <th scope="row">Pests and diseases</th>
+                            <td>
+                                <#list 0..damages?size - 1 as i>
+                                    <a href="/damage/${damages[i].name}?id=${damages[i].id}"
+                                       class="link-offset-2 link-underline link-underline-opacity-10">
+                                        ${damages[i].name}
+                                    </a>
+                                    <#if i != damages?size - 1>
+                                        ,
+                                    </#if>
+                                </#list>
+                            </td>
+                        </tr>
+                    </#if>
                     </tbody>
                 </table>
             </div>

@@ -1,4 +1,3 @@
-
 <html lang="en">
 
 <#include "basic/base.ftl">
@@ -13,13 +12,14 @@
             $.post("/post?id=" + ${post.id}, {
                 "text": text,
                 "feedback": -1,
-            }, function (comment) {
+            }, function (response) {
+                alert(response.exc)
                 $("#comments-container").prepend(
                     "<div class=\"d-flex justify-content-between\">\n" +
                     "                        <div class=\"d-flex align-items-center\">\n" +
-                    "                            <img src=\"" + comment.author.img + "\" class=\"avatar avatar-lg fs-5\" alt=\"ava\" width=\"36px\"\n" +
+                    "                            <img src=\"" + response.author.img + "\" class=\"avatar avatar-lg fs-5\" alt=\"ava\" width=\"36px\"\n" +
                     "                                 style=\"border-radius: 18px\"/>\n" +
-                    "                            <h6 class=\"text-start ms-3\">" + comment.author.name + " " + comment.author.lastname + "</h6>\n" +
+                    "                            <h6 class=\"text-start ms-3\">" + response.author.name + " " + response.author.lastname + "</h6>\n" +
                     "                        </div>\n" +
                     "                        <button class=\"btn btn-subtle text-end\" type=\"button\">\n" +
                     "                            <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\"\n" +
@@ -28,8 +28,8 @@
                     "                            </svg>\n" +
                     "                        </button>\n" +
                     "                    </div>\n" +
-                    "                    <p class=\"text-start mt-3\">" + comment.text + "</p>\n" +
-                    "                    <span class=\"text-end text-muted\">" + comment.dateTime + "</span>\n" +
+                    "                    <p class=\"text-start mt-3\">" + response.text + "</p>\n" +
+                    "                    <span class=\"text-end text-muted\">" + response.dateTime + "</span>\n" +
                     "                    <hr class=\"border border-secondary border-1 opacity-30\">\n" +
                     "                    <br>"
                 )

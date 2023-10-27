@@ -1,7 +1,7 @@
 package ru.kpfu.itis.gimaletdinova.server.menu;
 
 import ru.kpfu.itis.gimaletdinova.KeyNames;
-import ru.kpfu.itis.gimaletdinova.service.PostServiceImp;
+import ru.kpfu.itis.gimaletdinova.service.implementations.PostServiceImp;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

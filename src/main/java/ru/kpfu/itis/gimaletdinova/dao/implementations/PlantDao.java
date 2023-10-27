@@ -170,4 +170,15 @@ public class PlantDao implements Dao<Plant> {
         preparedStatement.setInt(2, cardId);
         preparedStatement.executeUpdate();
     }
+
+    public List<Integer> getDamages(int plantId) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "SELECT damage_id from plant_damage_link where plant_id=" + plantId;
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<Integer> list = new ArrayList<>();
+        while (resultSet.next()) {
+            list.add(resultSet.getInt("damage_id"));
+        }
+        return list;
+    }
 }
