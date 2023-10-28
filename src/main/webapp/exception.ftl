@@ -11,7 +11,9 @@
         <p class="text-start"><strong>Status code:</strong> ${status_code}</p>
         <p class="text-start"><strong>Request URI:</strong> ${uri}</p>
         <#if message??><p class="text-start"><strong>Message:</strong> ${message}</p></#if>
-        <a class="btn btn-primary" href="/main">Return to main page</a>
+        <#if 400 <= status_code  && status_code < 500>
+            <a class="btn btn-primary" href="/main">Return to main page</a>
+        </#if>
         <img src="/img/vred.gif" style="margin: 0 auto; width: 520px; display: block;"/>
     </div>
 </#macro>

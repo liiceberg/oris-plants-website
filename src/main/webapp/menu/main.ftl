@@ -40,6 +40,31 @@
                 )
             })
 
+            $("#select-category").change(function () {
+                let cat = $(this).val()
+                if (cat !== $("#default-select").val()) {
+                    $(".category").each(function () {
+
+                        if ($(this).attr("value") === cat) {
+                            $(this).removeAttr("hidden")
+                        } else {
+                            $(this).attr("hidden", "true")
+                        }
+
+                    })
+                } else {
+                    $(".category").each(function () {
+                        $(this).removeAttr("hidden")
+                    })
+                }
+
+            })
+
+            $('#search-btn').click(function () {
+                let text = $("#search-text").val()
+
+            })
+
         })
     </script>
 </#macro>
@@ -48,24 +73,24 @@
 
     <div class="content container">
         <div class="d-flex justify-content-end">
-            <button>
+            <button id="search-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                 </svg>
             </button>
-            <input type="text" class="d-block"/>
-            <select class="form-select d-block ms-3" aria-label="Filter" style="width: 200px;">
-                <option selected>Select a filter</option>
+            <input type="text" class="d-block" id="search-text"/>
+            <select class="form-select d-block ms-3" aria-label="Filter" style="width: 200px;" id="select-category">
+                <option selected id="default-select">Select a filter</option>
                 <#list category as c>
-                    <option value="">${c.getName()}</option>
+                    <option>${c.getName()}</option>
                 </#list>
             </select>
         </div>
         <br>
         <#if plants??>
             <#list plants as plant>
-                <div class="card" id="${plant.id}">
+                <div class="card category mb-3" id="${plant.id}" value="${plant.category.getName()}">
                     <div class="row g-0">
                         <a class="col-md-4" href="/plant/${plant.name}?id=${plant.id}">
                             <img src="${plant.img}" class="img-fluid rounded-start">
@@ -112,7 +137,6 @@
                         </div>
                     </div>
                 </div>
-                <br>
             </#list>
         </#if>
     </div>
