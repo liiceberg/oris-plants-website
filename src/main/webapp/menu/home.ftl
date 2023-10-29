@@ -1,3 +1,4 @@
+<#--noinspection ALL-->
 <html lang="en">
 <#include "../basic/menu_page.ftl">
 
@@ -6,10 +7,12 @@
 <#macro scripts>
     <script>
         $(document).ready(function () {
-
+            let id
             $(".delete-post").click(function () {
-                let id = $(this).val()
+                id = $(this).val()
+            })
 
+            $("#continue-btn").click( function () {
                 $.post("/myposts", {
                         "id": id
                     },
@@ -41,7 +44,7 @@
                         <span class="text-muted fs-sm">${post.dateTime}</span>
                     </div>
                 </div>
-                <button class="btn btn-subtle text-end delete-post" type="button" value="${post.id}">
+                <button class="btn btn-subtle text-end delete-post" type="button" value="${post.id}" data-bs-toggle="modal" data-bs-target="#modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -65,5 +68,23 @@
     </#list>
 
 </#macro>
+
+<div class="modal" tabindex="-1" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Warning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>The deleted post cannot be restored.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary" id="continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>
