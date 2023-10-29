@@ -40,12 +40,12 @@
                 )
             })
 
-            $("#select-category").change(function () {
-                let cat = $(this).val()
+            function applyFilter() {
+                let cat = $("#select-category").val()
                 if (cat !== $("#default-select").val()) {
                     $(".category").each(function () {
 
-                        if ($(this).attr("value") === cat) {
+                        if ($(this).attr("category") === cat) {
                             $(this).removeAttr("hidden")
                         } else {
                             $(this).attr("hidden", "true")
@@ -57,12 +57,21 @@
                         $(this).removeAttr("hidden")
                     })
                 }
+            }
 
+            $("#select-category").change(function () {
+                applyFilter()
             })
 
             $('#search-btn').click(function () {
-                let text = $("#search-text").val()
-
+                applyFilter()
+                let text = $("#search-text").val().toLowerCase()
+                $(".search").each(function () {
+                    let substring = $(this).attr("name").substring(0, text.length).toLowerCase()
+                    if (text !== substring) {
+                        $(this).attr("hidden", "true")
+                    }
+                })
             })
 
         })
@@ -90,14 +99,14 @@
         <br>
         <#if plants??>
             <#list plants as plant>
-                <div class="card category mb-3" id="${plant.id}" value="${plant.category.getName()}">
+                <div class="card category mb-3 search" id="${plant.id}" category="${plant.category.getName()}" name="${plant.name}">
                     <div class="row g-0">
                         <a class="col-md-4" href="/plant/${plant.name}?id=${plant.id}">
                             <img src="${plant.img}" class="img-fluid rounded-start">
                         </a>
                         <div class="col-md-8">
                             <div class="card-header d-flex justify-content-between">
-                                <h5 class="card-title">${plant.name}</h5>
+                                <h5 class="card-title plant-name" id="">${plant.name}</h5>
                                 <button class="btn btn-subtle text-end like-btn" type="button" value="${plant.id}"
                                         id="btn-${plant.id}">
                                     <#if fav?has_content && fav?seq_contains(plant.id)>
