@@ -6,7 +6,8 @@ import ru.kpfu.itis.gimaletdinova.model.Comment;
 import java.util.List;
 
 public interface CommentService {
-    List<CommentDto> getAll();
+    List<CommentDto> getAll(int postId);
     CommentDto get(int id);
-    boolean save(Comment post);
+    boolean save(Comment comment);
+    CommentDto getLast(int userId);
 }

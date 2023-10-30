@@ -70,6 +70,5 @@ public class LoginServlet extends HttpServlet {
 
         req.setAttribute("error", true);
         req.getRequestDispatcher( "/login.ftl").forward(req, resp);
-
     }
 }

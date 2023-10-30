@@ -23,13 +23,14 @@ public class UserDao implements Dao<User> {
 
     @Override
     public void update(User user) throws SQLException {
-        String sql = "update users set name=?, lastname=?, img=?, password=? where id=?;";
+        String sql = "update users set name=?, lastname=?, img=?, password=?, description=? where id=?;";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, user.getName());
         preparedStatement.setString(2, user.getLastname());
         preparedStatement.setString(3, user.getImg());
         preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setInt(5, user.getId());
+        preparedStatement.setString(5, user.getDescription());
+        preparedStatement.setInt(6, user.getId());
         preparedStatement.executeUpdate();
     }
 
@@ -45,7 +46,8 @@ public class UserDao implements Dao<User> {
                 resultSet.getString("lastname"),
                 resultSet.getString("login"),
                 resultSet.getString("password"),
-                resultSet.getString("img")
+                resultSet.getString("img"),
+                resultSet.getString("description")
         );
 
     }
@@ -62,7 +64,8 @@ public class UserDao implements Dao<User> {
                 resultSet.getString("lastname"),
                 resultSet.getString("login"),
                 resultSet.getString("password"),
-                resultSet.getString("img")
+                resultSet.getString("img"),
+                resultSet.getString("description")
         );
 
     }
@@ -82,7 +85,8 @@ public class UserDao implements Dao<User> {
                                 resultSet.getString("lastname"),
                                 resultSet.getString("login"),
                                 resultSet.getString("password"),
-                                resultSet.getString("img")
+                                resultSet.getString("img"),
+                                resultSet.getString("description")
                         )
                 );
             }

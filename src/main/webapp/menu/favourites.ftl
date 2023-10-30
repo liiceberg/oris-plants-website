@@ -65,6 +65,8 @@
                 </div>
             </div>
             <br>
+        <#else>
+            <h3 class="text-center">Add your favorites here</h3>
         </#list>
     </#if>
     </#macro>

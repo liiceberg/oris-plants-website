@@ -8,21 +8,17 @@
 
 <#macro content>
 
-    <div class="card" style="width: 680px; margin: 0 auto;">
+    <div class="card" style="width: 680px; margin: 0 auto">
 
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img class="img-fluid rounded-start" src="${user.img}" width="200">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <p class="card-text"><strong>Login:</strong> ${user.login}</p>
-                    <p class="card-text"><strong>Name:</strong> ${user.name}</p>
-                    <p class="card-text"><strong>Surname:</strong> ${user.lastname}</p>
-                </div>
-            </div>
+        <div class="card-img-top">
+            <img class="img-fluid rounded" src="${user.img}">
         </div>
-
+        <div class="card-body">
+            <p class="card-text"><strong>Login:</strong> ${user.login}</p>
+            <p class="card-text"><strong>Name:</strong> ${user.name}</p>
+            <p class="card-text"><strong>Surname:</strong> ${user.lastname}</p>
+            <p class="card-text"><strong>About me:</strong><#if user.description??> ${user.description}</#if></p>
+        </div>
         <div class="card-footer">
             <ul class="nav nav-pills card-footer-pills">
                 <li class="nav-item">
@@ -34,6 +30,7 @@
             </ul>
         </div>
     </div>
+
 
     <div class="modal" tabindex="-1" id="modal">
         <div class="modal-dialog">

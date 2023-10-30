@@ -5,7 +5,6 @@ import ru.kpfu.itis.gimaletdinova.dao.implementations.CommentDao;
 import ru.kpfu.itis.gimaletdinova.dto.CommentDto;
 import ru.kpfu.itis.gimaletdinova.model.Comment;
 import ru.kpfu.itis.gimaletdinova.service.CommentService;
-import ru.kpfu.itis.gimaletdinova.service.PostService;
 import ru.kpfu.itis.gimaletdinova.service.UserService;
 
 import java.sql.SQLException;
@@ -19,26 +18,24 @@ public class CommentServiceImp implements CommentService {
 
     private final CommentDao commentDao;
     private final UserService userService;
-    private final PostService postService;
 
-    public CommentServiceImp(Dao<Comment> commentDao, UserService userService, PostService postService) {
+    public CommentServiceImp(Dao<Comment> commentDao, UserService userService) {
         this.commentDao = (CommentDao) commentDao;
         this.userService = userService;
-        this.postService = postService;
     }
 
-    @Override
+
     public List<CommentDto> getAll() {
         try {
             return commentDao
                     .getAll()
                     .stream()
                     .map(c -> new CommentDto(
+                            c.getId(),
                             userService.get(c.getAuthorId()),
                             getTime(c.getDateTime()),
                             c.getText(),
-                            postService.get(c.getPostId()),
-                            userService.get(c.getFeedbackUserId())))
+                            c.getFeedbackCommentId()))
                     .collect(Collectors.toList());
         } catch (SQLException e) {
             return null;
@@ -50,11 +47,11 @@ public class CommentServiceImp implements CommentService {
         try {
             Comment c = commentDao.get(id);
             return new CommentDto(
+                    c.getId(),
                     userService.get(c.getAuthorId()),
                     getTime(c.getDateTime()),
                     c.getText(),
-                    postService.get(c.getPostId()),
-                    userService.get(c.getFeedbackUserId()));
+                    c.getFeedbackCommentId());
         } catch (SQLException e) {
             return null;
         }
@@ -70,17 +67,18 @@ public class CommentServiceImp implements CommentService {
         }
     }
 
+    @Override
     public List<CommentDto> getAll(int postId) {
         try {
             return commentDao
                     .getAll(postId)
                     .stream()
                     .map(c -> new CommentDto(
+                            c.getId(),
                             userService.get(c.getAuthorId()),
                             getTime(c.getDateTime()),
                             c.getText(),
-                            postService.get(c.getPostId())))
-    //                        userService.get(c.getFeedbackUserId())))
+                            c.getFeedbackCommentId()))
                     .collect(Collectors.toList());
         } catch (SQLException e) {
             return null;
@@ -88,6 +86,20 @@ public class CommentServiceImp implements CommentService {
     }
 
     private String getTime(LocalDateTime time) {
-        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:MM   dd.MM.yyyy"));
+        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm   dd.MM.yyyy"));
+    }
+
+    public CommentDto getLast(int userId) {
+        try {
+            Comment c = commentDao.getLast(userId);
+            return new CommentDto(
+                    c.getId(),
+                    userService.get(c.getAuthorId()),
+                    getTime(c.getDateTime()),
+                    c.getText(),
+                    c.getFeedbackCommentId());
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }

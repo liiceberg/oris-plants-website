@@ -9,3 +9,4 @@ public interface UserService {
     UserDto get(int id);
     boolean save(User user);
 }
+

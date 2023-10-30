@@ -81,6 +81,6 @@ public class PostServiceImp implements PostService {
     }
 
     private String getTime(LocalDateTime time) {
-        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:MM   dd.MM.yyyy"));
+        return time.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm   dd.MM.yyyy"));
     }
 }

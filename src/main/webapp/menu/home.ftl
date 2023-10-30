@@ -12,7 +12,7 @@
                 id = $(this).val()
             })
 
-            $("#continue-btn").click( function () {
+            $("#continue-btn").click(function () {
                 $.post("/myposts", {
                         "id": id
                     },
@@ -20,7 +20,6 @@
                         $("#" + id).remove()
                     }
                 )
-
             })
         })
     </script>
@@ -37,14 +36,17 @@
         <div class="card" style="width: 680px; margin: 0 auto" id="${post.id}">
             <div class="card-header d-flex justify-content-between">
                 <div class="d-flex align-items-center">
-                    <img src="${post.author.img}" class="avatar avatar-lg fs-5" alt="ava" width="36px"
-                         style="border-radius: 18px"/>
+                    <a href="/view/${post.author}?login=${post.author.login}">
+                        <img src="${post.author.img}" class="avatar avatar-lg fs-5" alt="ava" width="36px"
+                             style="border-radius: 18px"/>
+                    </a>
                     <div class="ms-3">
                         <h6 class="mb-0 fs-sm">${post.author}</h6>
                         <span class="text-muted fs-sm">${post.dateTime}</span>
                     </div>
                 </div>
-                <button class="btn btn-subtle text-end delete-post" type="button" value="${post.id}" data-bs-toggle="modal" data-bs-target="#modal">
+                <button class="btn btn-subtle text-end delete-post" type="button" value="${post.id}"
+                        data-bs-toggle="modal" data-bs-target="#modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -64,7 +66,7 @@
         </div>
         <br>
     <#else>
-        Your posts will be here
+        <h3 class="text-center">Your posts will be here</h3>
     </#list>
 
 </#macro>
@@ -81,7 +83,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-bs-dismiss="modal" class="btn btn-secondary" id="cancel-btn">Cancel</button>
-                <button type="button" data-bs-dismiss="modal" class="btn btn-primary" id="continue-btn">Continue</button>
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary" id="continue-btn">Continue
+                </button>
             </div>
         </div>
     </div>

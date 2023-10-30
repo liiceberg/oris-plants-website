@@ -1,31 +1,22 @@
 package ru.kpfu.itis.gimaletdinova.dto;
 
 public class CommentDto {
+    private int id;
     private UserDto author;
     private String dateTime;
     private String text;
-    private PostDto post;
-    private UserDto feedbackUser;
+    private Integer feedbackCommentId;
 
-    public CommentDto(UserDto author, String dateTime, String text, PostDto post, UserDto feedbackUser) {
+    public CommentDto(int id, UserDto author, String dateTime, String text, Integer feedbackCommentId) {
+        this.id = id;
         this.author = author;
         this.dateTime = dateTime;
         this.text = text;
-        this.post = post;
-        this.feedbackUser = feedbackUser;
+        this.feedbackCommentId = feedbackCommentId;
     }
 
-    public CommentDto(UserDto author, String dateTime, String text, PostDto post) {
-        this.author = author;
-        this.dateTime = dateTime;
-        this.text = text;
-        this.post = post;
-    }
-
-    public CommentDto(UserDto author, String dateTime, String text) {
-        this.author = author;
-        this.dateTime = dateTime;
-        this.text = text;
+    public int getId() {
+        return id;
     }
 
     public UserDto getAuthor() {
@@ -40,11 +31,7 @@ public class CommentDto {
         return text;
     }
 
-    public PostDto getPost() {
-        return post;
-    }
-
-    public UserDto getFeedbackUser() {
-        return feedbackUser;
+    public Integer getFeedbackCommentId() {
+        return feedbackCommentId;
     }
 }

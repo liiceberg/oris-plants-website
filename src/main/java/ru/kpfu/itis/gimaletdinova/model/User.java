@@ -14,13 +14,16 @@ public class User {
 
     private String img;
 
-    public User(int id, String name, String lastname, String login, String password, String img) {
+    private String description;
+
+    public User(int id, String name, String lastname, String login, String password, String img, String description) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.login = login;
         this.password = password;
         this.img = img;
+        this.description = description;
     }
 
     public User(String name, String lastname, String login, String password) {
@@ -86,5 +89,11 @@ public class User {
     }
     public void setImg(String img) {
         this.img = img;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

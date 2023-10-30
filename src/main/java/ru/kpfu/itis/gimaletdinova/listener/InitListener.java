@@ -26,7 +26,7 @@ public class InitListener implements ServletContextListener {
         DamageDao damageDao = new DamageDao(connection);
         UserService userService = new UserServiceImp(userDao);
         PostService postService = new PostServiceImp(postDao, userService);
-        CommentService commentService = new CommentServiceImp(commentDao, userService, postService);
+        CommentService commentService = new CommentServiceImp(commentDao, userService);
         DamageService damageService = new DamageServiceImp(damageDao);
 
         sce.getServletContext().setAttribute(KeyNames.USER_DAO, userDao);

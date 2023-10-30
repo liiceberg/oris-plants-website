@@ -14,10 +14,10 @@ import ru.kpfu.itis.gimaletdinova.util.PasswordUtil;
 
 
 public class UserServiceImp implements UserService {
-    private final Dao<User> dao;
+    private final UserDao dao;
 
     public UserServiceImp(Dao<User> dao) {
-        this.dao = dao;
+        this.dao = (UserDao) dao;
     }
 
     @Override
@@ -26,9 +26,9 @@ public class UserServiceImp implements UserService {
             return dao
                     .getAll()
                     .stream()
-                    .map(u -> new UserDto(u.getName(), u.getLastname(), u.getImg(), u.getLogin()))
+                    .map(u -> new UserDto(u.getId(), u.getName(), u.getLastname(), u.getImg(), u.getLogin(), u.getDescription()))
                     .collect(Collectors.toList());
-        } catch (SQLException | IllegalEnumValueException e) {
+        } catch (SQLException e) {
             return null;
         }
     }
@@ -37,8 +37,17 @@ public class UserServiceImp implements UserService {
     public UserDto get(int id) {
         try {
             User u = dao.get(id);
-            return new UserDto(u.getName(), u.getLastname(), u.getImg(), u.getLogin());
-        } catch (SQLException | IllegalEnumValueException e) {
+            return new UserDto(u.getId(), u.getName(), u.getLastname(), u.getImg(), u.getLogin(), u.getDescription());
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public UserDto get(String login) {
+        try {
+            User u = dao.get(login);
+            return new UserDto(u.getId(), u.getName(), u.getLastname(), u.getImg(), u.getLogin(), u.getDescription());
+        } catch (SQLException e) {
             return null;
         }
     }

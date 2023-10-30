@@ -20,11 +20,16 @@
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="${user.name}"/>
+                <input type="text" class="form-control" id="name" name="name" value="${user.name}" required maxlength="60"/>
             </div>
             <div class="mb-3">
                 <label for="lastname" class="form-label">Surname</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" value="${user.lastname}"/>
+                <input type="text" class="form-control" id="lastname" name="lastname" value="${user.lastname}" required maxlength="60"/>
+            </div>
+            <div class="mb-3">
+                <label for="desc" class="form-label">About me</label>
+                <textarea class="form-control" id="desc" name="desc" maxlength="512"><#if user.description??>${user.description}</#if></textarea>
+                <p id="charsLeft"></p>
             </div>
             <div class="mb-3">
                 <label for="old_password" class="form-label">Old password</label>
@@ -32,11 +37,11 @@
             </div>
             <div class="mb-3">
                 <label for="new_password" class="form-label">New password</label>
-                <input type="password" class="form-control" id="new_password" name="new_password"/>
+                <input type="password" class="form-control" id="new_password" name="new_password" minlength="8"/>
             </div>
             <div class="mb-3">
                 <label for="new_password_2" class="form-label">Repeat new password</label>
-                <input type="password" class="form-control" id="new_password_2" name="new_password_2"/>
+                <input type="password" class="form-control" id="new_password_2" name="new_password_2" minlength="8"/>
             </div>
             <div class="text-center">
                 <input type="submit" class="btn btn-primary" value="Save"/>

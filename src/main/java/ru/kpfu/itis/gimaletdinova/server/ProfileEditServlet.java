@@ -51,6 +51,7 @@ public class ProfileEditServlet extends HttpServlet {
         String img = FileDownloadUtil.saveImg(part);
         String name = req.getParameter("name");
         String lastname = req.getParameter("lastname");
+        String description = req.getParameter("desc");
         String oldPassword = req.getParameter("old_password");
         String newPassword = req.getParameter("new_password");
         String newPassword2 = req.getParameter("new_password_2");
@@ -62,6 +63,7 @@ public class ProfileEditServlet extends HttpServlet {
                 User user = userDao.get(getUserId(req));
                 user.setName(name);
                 user.setLastname(lastname);
+                user.setDescription(description);
                 if (img != null) {
                     user.setImg(img);
                 }

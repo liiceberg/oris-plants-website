@@ -8,36 +8,22 @@ public class Comment {
     private LocalDateTime dateTime;
     private String text;
     private int postId;
-    private int feedbackUserId;
+    private Integer feedbackCommentId;
 
-    public Comment(int id, int authorId, LocalDateTime dateTime, String text, int postId, int feedbackUserId) {
+    public Comment(int id, int authorId, LocalDateTime dateTime, String text, int postId, Integer feedbackCommentId) {
         this.id = id;
         this.authorId = authorId;
         this.dateTime = dateTime;
         this.text = text;
         this.postId = postId;
-        this.feedbackUserId = feedbackUserId;
+        this.feedbackCommentId = feedbackCommentId;
     }
 
-    public Comment(int id, int authorId, LocalDateTime dateTime, String text, int postId) {
-        this.id = id;
-        this.authorId = authorId;
-        this.dateTime = dateTime;
-        this.text = text;
-        this.postId = postId;
-    }
-
-    public Comment(int authorId, String text, int postId, int feedbackUserId) {
+    public Comment(int authorId, String text, int postId, Integer feedbackCommentId) {
         this.authorId = authorId;
         this.text = text;
         this.postId = postId;
-        this.feedbackUserId = feedbackUserId;
-    }
-
-    public Comment(int authorId, String text, int postId) {
-        this.authorId = authorId;
-        this.text = text;
-        this.postId = postId;
+        this.feedbackCommentId = feedbackCommentId;
     }
 
     public int getId() {
@@ -80,11 +66,11 @@ public class Comment {
         this.postId = postId;
     }
 
-    public int getFeedbackUserId() {
-        return feedbackUserId;
+    public Integer getFeedbackCommentId() {
+        return feedbackCommentId;
     }
 
-    public void setFeedbackUserId(int feedbackUserId) {
-        this.feedbackUserId = feedbackUserId;
+    public void setFeedbackCommentId(int feedbackCommentId) {
+        this.feedbackCommentId = feedbackCommentId;
     }
 }
