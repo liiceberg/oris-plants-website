@@ -134,7 +134,7 @@
                     <div id="cmt-${comment.id}">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex align-items-center">
-                                <a href="/view/${post.author}?login=${post.author.login}">
+                                <a href="/view/${comment.author}?login=${comment.author.login}">
                                     <img src="${comment.author.img}" class="avatar avatar-lg fs-5" alt="ava"
                                          width="36px"
                                          style="border-radius: 18px"/>
