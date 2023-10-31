@@ -25,10 +25,10 @@
             </div>
 
             <h5>Symptoms:</h5>
-            <p>${damage.symptoms}</p>
+            <p style="white-space: pre-wrap">${damage.symptoms}</p>
 
             <h5>Control measures:</h5>
-            <p> ${damage.controlMeasures} </p>
+            <p style="white-space: pre-wrap"> ${damage.controlMeasures} </p>
 
         </div>
     </#if>

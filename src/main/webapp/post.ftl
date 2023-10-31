@@ -112,7 +112,7 @@
             </div>
             <h5 class="card-header">${post.title}</h5>
             <div class="card-body">
-                <#if post.text??><p class="card-text">${post.text}</p></#if>
+                <#if post.text??><p class="card-text" style="white-space: pre-wrap">${post.text}</p></#if>
             </div>
             <#if post.img??><img src="${post.img}" class="card-img-top"/></#if>
         </div>
@@ -147,7 +147,7 @@
                                         author="${comment.author}">
                                     Reply
                                 </button>
-                                <#if Session.user_id?number == comment.author.id>
+                                <#if Session.user_id?? && Session.user_id?number == comment.author.id>
                                     <button class="btn btn-link text-end delete-comment" type="button"
                                             value="${comment.id}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

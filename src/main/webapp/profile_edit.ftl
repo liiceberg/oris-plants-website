@@ -28,7 +28,7 @@
                     return true
                 }
                 else {
-                    $("#name-feedback").text("Looks good")
+                    $("#name-feedback").text("")
                     $("#name").removeClass("is-invalid")
                     $("#name").addClass("is-valid")
                     return false
@@ -56,7 +56,7 @@
                     return true
                 }
                 else {
-                    $("#lastname-feedback").text("Looks good")
+                    $("#lastname-feedback").text("")
                     $("#lastname").removeClass("is-invalid")
                     $("#lastname").addClass("is-valid")
                     return false
@@ -76,7 +76,7 @@
                     $("#desc").addClass("is-invalid")
                     return true
                 } else {
-                    $("#desc-feedback").text("Looks good")
+                    $("#desc-feedback").text("")
                     $("#desc").removeClass("is-invalid")
                     $("#desc").addClass("is-valid")
                     return false

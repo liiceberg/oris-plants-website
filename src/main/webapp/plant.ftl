@@ -10,11 +10,11 @@
     <#if plant??>
         <div class="content container mt-3">
             <div style="width: 700px; margin: 0 auto">
-                <h3 class="text-center">${plant.name}</h3>
+                <h3 class="text-center mb-3">${plant.name}</h3>
                 <figure class="figure" style="width: 400px; margin: 0 auto; display: block">
                     <img src="${plant.img}" class="figure-img img-fluid rounded" alt="Photo">
                 </figure>
-                <p class="text-center">${plant.description}</p>
+                <p class="text-center mt-3" style="white-space: pre-wrap">${plant.description}</p>
                 <table class="table">
                     <tbody>
                     <tr>

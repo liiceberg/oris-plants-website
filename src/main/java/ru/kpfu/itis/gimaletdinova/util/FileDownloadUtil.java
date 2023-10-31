@@ -39,7 +39,6 @@ public class FileDownloadUtil {
             file.delete();
             return null;
         }
-//        TODO verify file
         Map uploadResult = cloudinary.uploader().upload(file, new HashMap<>());
         String url = uploadResult.get("url").toString();
 
