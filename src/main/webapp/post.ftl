@@ -27,7 +27,8 @@
                         "                            <h6 class=\"text-start ms-3\">" + response.author.name + " " + response.author.lastname + "</h6>\n" +
                         "                        </div>\n" +
                         "                                                <div class=\"d-flex align-items-center\">\n" +
-                        "<button type=\"button\" class=\"btn btn-link reply-btn\">Reply</button>\n" +
+                        "<button type=\"button\" class=\"btn btn-link reply-btn\" value=\"" + response.id + "\" " +
+                    "author=\"" + response.author.name + " " + response.author.lastname + "\">Reply</button>\n" +
                         "<button class=\"btn btn-link text-end delete-comment\" type=\"button\" value=\"" + response.id + "\">\n" +
                         "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\"\n" +
                         "class=\"bi bi-trash3\" viewBox=\"0 0 16 16\">\n" +
@@ -50,19 +51,16 @@
                         "                    <br>"
                     $("#comments-container").prepend(str)
                     $("#text").val("")
+
                     feedback = null
 
-                    // function removeAllListeners(element) {
-                    //     var clone = element.cloneNode(true)
-                    //     element.parentNode.replaceChild(clone, element)
-                    // }
-                    //
-                    // let textarea = document.getElementById("text")
-                    // removeAllListeners(textarea)
+                    let textarea = document.getElementById("text")
+                    let clone = textarea.cloneNode(true)
+                    textarea.parentNode.replaceChild(clone, textarea)
                 })
             })
 
-            $(".reply-btn").click(function () {
+            $(document).on("click", ".reply-btn", function () {
 
                 feedback = $(this).val()
                 let author = $(this).attr("author") + ", "
@@ -85,7 +83,7 @@
             })
 
 
-            $(".delete-comment").click(function () {
+            $(document).on("click", '.delete-comment', function (){
                 let id = $(this).val()
                 $.get("/comment?id=" + id,
                     function () {
@@ -94,12 +92,13 @@
                 )
             })
 
-            $(".feedback").click(function () {
+            $(document).on("click", ".feedback", function () {
                 let id = "cmt-" + $(this).val()
                 let c = document.getElementById(id)
                 c.scrollIntoView()
             })
         })
+
     </script>
 </#macro>
 

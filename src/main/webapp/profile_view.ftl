@@ -17,17 +17,6 @@
 
     </div>
 
-
-<#--    <div class="content container" style="width: 500px; margin: 0 auto">-->
-<#--        <figure class="figure mt-3" style="width: 400px; margin: 0 auto; display: block">-->
-<#--            <img src="${user.img}" class="figure-img img-fluid rounded" alt="Photo">-->
-<#--        </figure>-->
-<#--        <p><strong>Name:</strong> ${user.name}</p>-->
-<#--        <p><strong>Surname:</strong> ${user.lastname}</p>-->
-<#--        <#if user.description??>-->
-<#--            <p><strong>About me:</strong> ${user.description}</p>-->
-<#--        </#if>-->
-<#--    </div>-->
 </#macro>
 
 </html>
